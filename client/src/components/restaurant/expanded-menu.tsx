@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { foods } from "@shared/foods-data";
 import { Input } from "@/components/ui/input";
+import defaultFoodImage from "@assets/generated_images/caesar_salad_restaurant_style.png";
 
 export function ExpandedMenuSection() {
   const [activeCategory, setActiveCategory] = useState("Appetizers");
@@ -92,15 +93,38 @@ export function ExpandedMenuSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredItems.map((item, index) => (
+          {filteredItems.map((item, index) => {
+            let foodImage = defaultFoodImage;
+            if (item.image) {
+              try {
+                foodImage = require(`@assets/generated_images/${item.image}`).default;
+              } catch {
+                foodImage = defaultFoodImage;
+              }
+            }
+            return (
             <Card
               key={`${item.name}-${index}`}
-              className="hover-elevate active-elevate-2 transition-all"
+              className="hover-elevate active-elevate-2 transition-all overflow-hidden flex flex-col"
               data-aos="fade-up"
               data-aos-delay={Math.min(index * 30, 300)}
               data-testid={`card-expanded-menu-${index}`}
             >
-              <CardContent className="p-4">
+              {item.image && (
+                <div className="relative w-full h-48 bg-muted overflow-hidden" data-testid={`img-expanded-${index}`}>
+                  <img 
+                    src={foodImage}
+                    alt={item.name}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  {item.comingSoon && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <Badge className="text-xs">Coming Soon</Badge>
+                    </div>
+                  )}
+                </div>
+              )}
+              <CardContent className="p-4 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="font-serif text-lg font-bold flex-1" data-testid={`text-expanded-item-${index}`}>
                     {item.name}
@@ -111,21 +135,21 @@ export function ExpandedMenuSection() {
                     </span>
                   )}
                 </div>
-                <p className="text-muted-foreground text-sm mb-3 line-clamp-2" data-testid={`text-expanded-desc-${index}`}>
+                <p className="text-muted-foreground text-sm mb-3 line-clamp-2 flex-1" data-testid={`text-expanded-desc-${index}`}>
                   {item.description}
                 </p>
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2 flex-wrap mt-auto">
                   <Badge variant="outline" className="text-xs" data-testid={`badge-expanded-cat-${index}`}>
                     {item.category}
                   </Badge>
                   {item.vegetarian && <Badge variant="secondary" className="text-xs" data-testid={`badge-expanded-veg-${index}`}>V</Badge>}
                   {item.vegan && <Badge variant="secondary" className="text-xs" data-testid={`badge-expanded-vegan-${index}`}>VG</Badge>}
-                  {item.comingSoon && <Badge className="text-xs" data-testid={`badge-expanded-soon-${index}`}>Coming Soon</Badge>}
-                  {item.spicy && <Badge className="text-xs bg-red-600" data-testid={`badge-expanded-spicy-${index}`}>🌶</Badge>}
+                  {item.spicy && <Badge className="text-xs bg-red-600" data-testid={`badge-expanded-spicy-${index}`}>Spicy</Badge>}
                 </div>
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
 
         {filteredItems.length === 0 && (

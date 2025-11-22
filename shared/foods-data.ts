@@ -8,11 +8,12 @@ export interface Food {
   glutenFree?: boolean;
   spicy?: boolean;
   comingSoon?: boolean;
+  image?: string;
 }
 
 export const foods: Food[] = [
   // Appetizers (100+)
-  { name: "Caesar Salad", description: "Romaine lettuce, parmesan, croutons, classic dressing", price: 14, category: "Appetizers", vegetarian: true },
+  { name: "Caesar Salad", description: "Romaine lettuce, parmesan, croutons, classic dressing", price: 14, category: "Appetizers", vegetarian: true, image: "caesar_salad_restaurant_style.png" },
   { name: "French Onion Soup", description: "Caramelized onions, gruyere cheese, crispy bread", price: 12, category: "Appetizers", vegetarian: true },
   { name: "Escargot", description: "Burgundy snails, garlic herb butter, toasted baguette", price: 18, category: "Appetizers" },
   { name: "Shrimp Cocktail", description: "Chilled tiger shrimp, cocktail sauce, lemon", price: 16, category: "Appetizers" },
@@ -29,7 +30,7 @@ export const foods: Food[] = [
   { name: "Chicken Satay", description: "Grilled chicken skewers, peanut sauce", price: 12, category: "Appetizers", spicy: true },
   { name: "Spring Rolls", description: "Fresh or fried, with dipping sauce", price: 10, category: "Appetizers", vegetarian: true },
   { name: "Arancini", description: "Fried risotto balls, mozzarella center", price: 11, category: "Appetizers", vegetarian: true },
-  { name: "Burrata Salad", description: "Creamy burrata, heirloom tomatoes, basil", price: 15, category: "Appetizers", vegetarian: true },
+  { name: "Burrata Salad", description: "Creamy burrata, heirloom tomatoes, basil", price: 15, category: "Appetizers", vegetarian: true, image: "burrata_salad_fresh_vegetables.png" },
   { name: "Tuna Tartare", description: "Diced tuna, avocado, soy, wasabi", price: 19, category: "Appetizers", spicy: true },
   { name: "Charcuterie Board", description: "Selection of cured meats and cheeses", price: 25, category: "Appetizers" },
 
@@ -56,12 +57,12 @@ export const foods: Food[] = [
   { name: "Vietnamese Pho", description: "Rice noodles in aromatic broth", price: 12, category: "Soups" },
 
   // Main Courses - Beef (150+)
-  { name: "Filet Mignon", description: "Prime cut beef with truffle mashed potatoes and red wine reduction", price: 58, category: "Main Courses - Beef" },
+  { name: "Filet Mignon", description: "Prime cut beef with truffle mashed potatoes and red wine reduction", price: 58, category: "Main Courses - Beef", image: "premium_filet_mignon_steak.png" },
   { name: "Ribeye Steak", description: "Marbled ribeye, herb butter, seasonal vegetables", price: 52, category: "Main Courses - Beef" },
   { name: "New York Strip", description: "Classic strip steak, perfectly charred", price: 48, category: "Main Courses - Beef" },
   { name: "T-Bone Steak", description: "Tender loin and strip in one impressive cut", price: 62, category: "Main Courses - Beef" },
   { name: "Beef Wellington", description: "Tenderloin, mushroom duxelles, puff pastry", price: 68, category: "Main Courses - Beef" },
-  { name: "Wagyu Ribeye", description: "Premium Japanese beef, truffle butter, asparagus", price: 98, category: "Main Courses - Beef" },
+  { name: "Wagyu Ribeye", description: "Premium Japanese beef, truffle butter, asparagus", price: 98, category: "Main Courses - Beef", image: "premium_wagyu_ribeye_steak.png" },
   { name: "Tomahawk Steak", description: "Massive porterhouse cut, herb crusted", price: 85, category: "Main Courses - Beef" },
   { name: "Beef Bourguignon", description: "Tender beef in red wine sauce with vegetables", price: 42, category: "Main Courses - Beef" },
   { name: "Steak au Poivre", description: "Peppercorn-crusted steak, cognac sauce", price: 54, category: "Main Courses - Beef" },
@@ -78,8 +79,8 @@ export const foods: Food[] = [
   { name: "Beef Tartare", description: "Raw beef, quail egg, capers, shallots", price: 22, category: "Main Courses - Beef" },
 
   // Main Courses - Seafood (200+)
-  { name: "Lobster Thermidor", description: "Fresh Atlantic lobster with drawn butter and asparagus", price: 72, category: "Main Courses - Seafood" },
-  { name: "Chilean Sea Bass", description: "Pan-seared with lemon butter sauce and capers", price: 64, category: "Main Courses - Seafood" },
+  { name: "Lobster Thermidor", description: "Fresh Atlantic lobster with drawn butter and asparagus", price: 72, category: "Main Courses - Seafood", image: "lobster_thermidor_luxury_dish.png" },
+  { name: "Chilean Sea Bass", description: "Pan-seared with lemon butter sauce and capers", price: 64, category: "Main Courses - Seafood", image: "seared_chilean_sea_bass.png" },
   { name: "Pan-Seared Salmon", description: "Atlantic salmon, lemon beurre blanc, seasonal vegetables", price: 42, category: "Main Courses - Seafood" },
   { name: "Whole Grilled Fish", description: "Fresh sea bream, herbs, lemon", price: 48, category: "Main Courses - Seafood" },
   { name: "Branzino en Papillote", description: "Branzino in parchment with vegetables", price: 46, category: "Main Courses - Seafood" },
@@ -100,7 +101,7 @@ export const foods: Food[] = [
   { name: "Shrimp Scampi", description: "Garlic, white wine, pasta, herbs", price: 32, category: "Main Courses - Seafood" },
 
   // Main Courses - Poultry (120+)
-  { name: "Duck Confit", description: "Crispy duck leg, orange glaze, root vegetables", price: 48, category: "Main Courses - Poultry" },
+  { name: "Duck Confit", description: "Crispy duck leg, orange glaze, root vegetables", price: 48, category: "Main Courses - Poultry", image: "duck_confit_with_orange_sauce.png" },
   { name: "Coq au Vin", description: "Chicken in red wine with pearl onions", price: 38, category: "Main Courses - Poultry" },
   { name: "Chicken Marsala", description: "Pan-seared chicken, mushrooms, marsala wine", price: 32, category: "Main Courses - Poultry" },
   { name: "Pollo alla Parmigiana", description: "Breaded chicken, mozzarella, tomato sauce", price: 30, category: "Main Courses - Poultry" },
@@ -122,7 +123,7 @@ export const foods: Food[] = [
   { name: "Chicken Shawarma", description: "Spiced chicken wrap, tahini sauce", price: 24, category: "Main Courses - Poultry", spicy: true },
 
   // Main Courses - Lamb (80+)
-  { name: "Herb Crusted Lamb", description: "Grilled lamb chops with rosemary and garlic mashed potatoes", price: 56, category: "Main Courses - Lamb" },
+  { name: "Herb Crusted Lamb", description: "Grilled lamb chops with rosemary and garlic mashed potatoes", price: 56, category: "Main Courses - Lamb", image: "herb_crusted_lamb_chops.png" },
   { name: "Lamb Chops Grilled", description: "Prime lamb chops, herb seasoning, seasonal veg", price: 54, category: "Main Courses - Lamb" },
   { name: "Lamb Shank", description: "Braised lamb shank, root vegetables, red wine", price: 44, category: "Main Courses - Lamb" },
   { name: "Lamb Tagine", description: "Moroccan-spiced lamb, apricots, almonds", price: 42, category: "Main Courses - Lamb", spicy: true },
@@ -184,8 +185,8 @@ export const foods: Food[] = [
   { name: "Roasted Beetroot Salad", description: "Roasted beets, goat cheese, walnuts", price: 19, category: "Vegetarian", vegetarian: true },
 
   // Desserts (80+)
-  { name: "Chocolate Lava Cake", description: "Decadent dessert with vanilla ice cream and gold leaf", price: 18, category: "Desserts", vegetarian: true },
-  { name: "Tiramisu", description: "Classic Italian dessert, espresso, mascarpone, cocoa", price: 14, category: "Desserts", vegetarian: true },
+  { name: "Chocolate Lava Cake", description: "Decadent dessert with vanilla ice cream and gold leaf", price: 18, category: "Desserts", vegetarian: true, image: "chocolate_lava_cake_dessert.png" },
+  { name: "Tiramisu", description: "Classic Italian dessert, espresso, mascarpone, cocoa", price: 14, category: "Desserts", vegetarian: true, image: "classic_tiramisu_dessert.png" },
   { name: "Crème Brûlée", description: "Vanilla custard, caramelized sugar, fresh berries", price: 12, category: "Desserts", vegetarian: true },
   { name: "Tarte Tatin", description: "Upside-down caramelized apple tart, vanilla ice cream", price: 14, category: "Desserts", vegetarian: true },
   { name: "Chocolate Mousse", description: "Rich dark chocolate mousse, whipped cream", price: 11, category: "Desserts", vegetarian: true },

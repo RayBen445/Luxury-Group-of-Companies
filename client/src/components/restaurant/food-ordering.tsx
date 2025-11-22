@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { Plus, Minus, Trash2, Home, Store } from "lucide-react";
+import defaultFoodImage from "@assets/generated_images/caesar_salad_restaurant_style.png";
 
 const orderSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -151,9 +152,27 @@ export function FoodOrderingSection() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {availableFoods.map((food, idx) => (
-                <Card key={`${food.name}-${idx}`} className="hover-elevate active-elevate-2" data-testid={`card-order-item-${idx}`}>
-                  <CardContent className="p-4">
+              {availableFoods.map((food, idx) => {
+                let foodImage = defaultFoodImage;
+                if (food.image) {
+                  try {
+                    foodImage = require(`@assets/generated_images/${food.image}`).default;
+                  } catch {
+                    foodImage = defaultFoodImage;
+                  }
+                }
+                return (
+                <Card key={`${food.name}-${idx}`} className="hover-elevate active-elevate-2 flex flex-col overflow-hidden" data-testid={`card-order-item-${idx}`}>
+                  {food.image && (
+                    <div className="relative w-full h-32 bg-muted overflow-hidden" data-testid={`img-order-${idx}`}>
+                      <img 
+                        src={foodImage}
+                        alt={food.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <CardContent className="p-4 flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-2">
                       <h4 className="font-semibold text-sm" data-testid={`text-order-name-${idx}`}>{food.name}</h4>
                       <span className="text-primary font-bold" data-testid={`text-order-price-${idx}`}>${food.price}</span>
@@ -168,14 +187,15 @@ export function FoodOrderingSection() {
                     <Button
                       onClick={() => addToCart(food)}
                       size="sm"
-                      className="w-full"
+                      className="w-full mt-auto"
                       data-testid={`button-add-${idx}`}
                     >
                       <Plus className="w-4 h-4 mr-1" /> Add
                     </Button>
                   </CardContent>
                 </Card>
-              ))}
+                );
+              })}
             </div>
           </div>
 
