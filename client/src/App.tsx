@@ -33,6 +33,8 @@ import ClubPage from "@/pages/club";
 import LoungePage from "@/pages/lounge";
 import TechPage from "@/pages/tech";
 import BankPage from "@/pages/bank";
+import BankOpenAccountPage from "@/pages/bank-open-account";
+import BankDashboardPage from "@/pages/bank-dashboard";
 
 function Router() {
   const [location] = useLocation();
@@ -49,6 +51,8 @@ function Router() {
       <Route path="/lounge" component={LoungePage} />
       <Route path="/tech" component={TechPage} />
       <Route path="/bank" component={BankPage} />
+      <Route path="/bank/open-account" component={BankOpenAccountPage} />
+      <Route path="/bank/dashboard" component={BankDashboardPage} />
       
       {/* Restaurant Routes */}
       <Route path="/restaurant" component={HomePage} />

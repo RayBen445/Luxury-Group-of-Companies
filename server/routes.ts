@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema } from "@shared/schema";
+import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/reservations", async (req, res) => {
@@ -63,6 +63,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching orders:", error);
       res.status(500).json({ error: "Failed to fetch orders" });
+    }
+  });
+
+  // Banking routes
+  app.post("/api/bank/accounts", async (req, res) => {
+    try {
+      const parsed = insertBankAccountSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid account data", issues: parsed.error.issues });
+      }
+      const account = await storage.createBankAccount(parsed.data);
+      res.json(account);
+    } catch (error) {
+      console.error("Error creating bank account:", error);
+      res.status(500).json({ error: "Failed to create account" });
+    }
+  });
+
+  app.get("/api/bank/accounts/:email", async (req, res) => {
+    try {
+      const accounts = await storage.getBankAccountsByEmail(req.params.email);
+      res.json(accounts);
+    } catch (error) {
+      console.error("Error fetching accounts:", error);
+      res.status(500).json({ error: "Failed to fetch accounts" });
+    }
+  });
+
+  app.get("/api/bank/accounts/:id/cards", async (req, res) => {
+    try {
+      const cards = await storage.getBankCardsByAccountId(req.params.id);
+      res.json(cards);
+    } catch (error) {
+      console.error("Error fetching cards:", error);
+      res.status(500).json({ error: "Failed to fetch cards" });
+    }
+  });
+
+  app.post("/api/bank/cards", async (req, res) => {
+    try {
+      const parsed = insertBankCardSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid card data" });
+      }
+      const card = await storage.createBankCard(parsed.data);
+      res.json(card);
+    } catch (error) {
+      console.error("Error creating bank card:", error);
+      res.status(500).json({ error: "Failed to create card" });
+    }
+  });
+
+  app.get("/api/bank/transactions/:accountId", async (req, res) => {
+    try {
+      const transactions = await storage.getTransactionsByAccountId(req.params.accountId);
+      res.json(transactions);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+      res.status(500).json({ error: "Failed to fetch transactions" });
+    }
+  });
+
+  app.post("/api/bank/transactions", async (req, res) => {
+    try {
+      const parsed = insertTransactionSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid transaction data" });
+      }
+      const transaction = await storage.createTransaction(parsed.data);
+      res.json(transaction);
+    } catch (error) {
+      console.error("Error creating transaction:", error);
+      res.status(500).json({ error: "Failed to create transaction" });
     }
   });
 
