@@ -22,9 +22,9 @@ export function ContactSection() {
                 <div className="flex gap-4" data-testid="item-phone">
                   <Phone className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-semibold mb-1">Phone</h4>
-                    <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary" data-testid="link-phone">
-                      +1 (555) 123-4567
+                    <h4 className="font-semibold mb-1">WhatsApp</h4>
+                    <a href="https://wa.me/2248075614248" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary" data-testid="link-phone">
+                      +224 807 561 4248
                     </a>
                   </div>
                 </div>
@@ -33,8 +33,8 @@ export function ContactSection() {
                   <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold mb-1">Email</h4>
-                    <a href="mailto:info@tavolaroyale.com" className="text-muted-foreground hover:text-primary" data-testid="link-email">
-                      info@tavolaroyale.com
+                    <a href="mailto:latavoroyale@gmail.com" className="text-muted-foreground hover:text-primary" data-testid="link-email">
+                      latavoroyale@gmail.com
                     </a>
                   </div>
                 </div>
@@ -78,7 +78,7 @@ export function ContactSection() {
                   <Button
                     variant="secondary"
                     className="w-full mb-3"
-                    onClick={() => window.open("https://wa.me/1234567890", "_blank")}
+                    onClick={() => window.open("https://wa.me/2248075614248", "_blank")}
                     data-testid="button-contact-whatsapp"
                   >
                     <MessageCircle className="w-4 h-4 mr-2" />
