@@ -5,6 +5,7 @@ import { HotelFooter } from "@/components/hotel/hotel-footer";
 import { ClubFooter } from "@/components/club/club-footer";
 import { LoungeFooter } from "@/components/lounge/lounge-footer";
 import { TechFooter } from "@/components/tech/tech-footer";
+import { BankFooter } from "@/components/bank/bank-footer";
 
 export function FooterWrapper() {
   const [location] = useLocation();
@@ -20,6 +21,8 @@ export function FooterWrapper() {
     return <LoungeFooter />;
   } else if (location.startsWith("/tech")) {
     return <TechFooter />;
+  } else if (location.startsWith("/bank")) {
+    return <BankFooter />;
   } else {
     // Restaurant and all other routes use the restaurant footer
     return <Footer />;
