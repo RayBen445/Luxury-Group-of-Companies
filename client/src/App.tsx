@@ -23,6 +23,9 @@ import FoodOrderingPage from "@/pages/food-ordering";
 import PoliciesPage from "@/pages/policies";
 import LoyaltyPage from "@/pages/loyalty";
 import SettingsPage from "@/pages/settings";
+import PrivacyPolicyPage from "@/pages/privacy-policy";
+import TermsOfServicePage from "@/pages/terms-of-service";
+import CancellationPolicyPage from "@/pages/cancellation-policy";
 
 function Router() {
   return (
@@ -36,6 +39,9 @@ function Router() {
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />
       <Route path="/policies" component={PoliciesPage} />
+      <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+      <Route path="/terms-of-service" component={TermsOfServicePage} />
+      <Route path="/cancellation-policy" component={CancellationPolicyPage} />
       <Route path="/loyalty" component={LoyaltyPage} />
       <Route path="/settings" component={SettingsPage} />
       <Route component={NotFound} />
