@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { insertReservationSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { tablePricing } from "@shared/table-pricing";
+import { Users, Calendar, Clock, Phone, Mail, User } from "lucide-react";
 
 export function ReservationForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -131,32 +132,193 @@ export function ReservationForm() {
           </CardContent>
         </Card>
 
-        <Card className="glass-effect" data-aos="fade-up" data-aos-delay="200">
+        <Card className="glass-effect border border-primary/20" data-aos="fade-up" data-aos-delay="200">
           <CardContent className="p-8">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <div className="bg-gradient-to-r from-primary/10 to-transparent rounded-lg p-6 mb-8 border border-primary/20">
+                  <h3 className="font-serif text-xl font-bold mb-2">Complete Your Reservation</h3>
+                  <p className="text-muted-foreground text-sm">Fill in your details to complete your booking</p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex gap-2 items-center mb-3 font-semibold">
+                            <User className="w-4 h-4 text-primary" />
+                            Full Name
+                          </FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <Input 
+                                placeholder="John Doe" 
+                                {...field} 
+                                data-testid="input-name"
+                                className="pl-4 h-11 border-primary/20 focus:border-primary"
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex gap-2 items-center mb-3 font-semibold">
+                            <Mail className="w-4 h-4 text-primary" />
+                            Email Address
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="email" 
+                              placeholder="john@example.com" 
+                              {...field} 
+                              data-testid="input-email"
+                              className="pl-4 h-11 border-primary/20 focus:border-primary"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex gap-2 items-center mb-3 font-semibold">
+                            <Phone className="w-4 h-4 text-primary" />
+                            Phone Number
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="+1 (555) 000-0000" 
+                              {...field} 
+                              data-testid="input-phone"
+                              className="pl-4 h-11 border-primary/20 focus:border-primary"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="guests"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex gap-2 items-center mb-3 font-semibold">
+                            <Users className="w-4 h-4 text-primary" />
+                            Number of Guests
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="number" 
+                              min="1" 
+                              max="20" 
+                              {...field} 
+                              onChange={(e) => field.onChange(parseInt(e.target.value))} 
+                              data-testid="input-guests"
+                              className="pl-4 h-11 border-primary/20 focus:border-primary"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="date"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex gap-2 items-center mb-3 font-semibold">
+                            <Calendar className="w-4 h-4 text-primary" />
+                            Preferred Date
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="date" 
+                              {...field} 
+                              data-testid="input-date"
+                              className="pl-4 h-11 border-primary/20 focus:border-primary"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="time"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex gap-2 items-center mb-3 font-semibold">
+                            <Clock className="w-4 h-4 text-primary" />
+                            Preferred Time
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              type="time" 
+                              {...field} 
+                              data-testid="input-time"
+                              className="pl-4 h-11 border-primary/20 focus:border-primary"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
                   <FormField
                     control={form.control}
-                    name="name"
+                    name="tableType"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John Doe" {...field} data-testid="input-name" />
-                        </FormControl>
+                        <FormLabel className="font-semibold mb-3 block">Table Location</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-table-type" className="h-11 border-primary/20">
+                              <SelectValue />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="indoor">🏠 Indoor Dining</SelectItem>
+                            <SelectItem value="outdoor">🌙 Outdoor Terrace</SelectItem>
+                            <SelectItem value="vip">👑 VIP Lounge</SelectItem>
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="specialRequests"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email</FormLabel>
+                        <FormLabel className="font-semibold mb-3 block">Special Requests (Optional)</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="john@example.com" {...field} data-testid="input-email" />
+                          <Textarea 
+                            placeholder="Any dietary restrictions, allergies, or special occasions we should know about?" 
+                            {...field} 
+                            data-testid="textarea-requests"
+                            className="min-h-24 border-primary/20 focus:border-primary resize-none"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -164,104 +326,19 @@ export function ReservationForm() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone</FormLabel>
-                        <FormControl>
-                          <Input placeholder="+1 (555) 000-0000" {...field} data-testid="input-phone" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="guests"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Number of Guests</FormLabel>
-                        <FormControl>
-                          <Input type="number" min="1" max="20" {...field} onChange={(e) => field.onChange(parseInt(e.target.value))} data-testid="input-guests" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="date"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Date</FormLabel>
-                        <FormControl>
-                          <Input type="date" {...field} data-testid="input-date" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="time"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Time</FormLabel>
-                        <FormControl>
-                          <Input type="time" {...field} data-testid="input-time" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="tableType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Table Type</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger data-testid="select-table-type">
-                            <SelectValue />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="indoor">Indoor</SelectItem>
-                          <SelectItem value="outdoor">Outdoor</SelectItem>
-                          <SelectItem value="vip">VIP</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="specialRequests"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Special Requests (Optional)</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Any dietary restrictions or special occasions?" {...field} data-testid="textarea-requests" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button type="submit" className="w-full pulse-gold" disabled={isLoading} size="lg" data-testid="button-submit-reservation">
-                  {isLoading ? "Reserving..." : "Reserve Table"}
+                <Button 
+                  type="submit" 
+                  className="w-full pulse-gold h-12 text-base font-semibold" 
+                  disabled={isLoading} 
+                  size="lg" 
+                  data-testid="button-submit-reservation"
+                >
+                  {isLoading ? "Reserving Your Table..." : "Reserve My Table"}
                 </Button>
+
+                <p className="text-center text-xs text-muted-foreground">
+                  You'll receive a confirmation email within 1 hour of booking
+                </p>
               </form>
             </Form>
           </CardContent>
