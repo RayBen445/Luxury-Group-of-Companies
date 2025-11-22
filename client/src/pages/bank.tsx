@@ -3,8 +3,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, TrendingUp, Lock, Users, Globe, CreditCard, Zap, BarChart3 } from "lucide-react";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 export default function BankPage() {
+  const { toast } = useToast();
+
+  const handleOpenAccount = () => {
+    toast({
+      title: "Account Application Initiated",
+      description: "We'll contact you shortly to complete your account setup. Check your email for next steps.",
+    });
+  };
+
+  const handleGetStarted = () => {
+    toast({
+      title: "Welcome to Luxury Bank",
+      description: "Our team will reach out to you within 24 hours to discuss your banking needs.",
+    });
+  };
   const services = [
     {
       id: 1,
@@ -58,10 +74,10 @@ export default function BankPage() {
             Experience world-class banking services designed for those who demand excellence. Secure, innovative, and personalized wealth management.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="rounded-md">
+            <Button size="lg" className="rounded-md" onClick={handleOpenAccount} data-testid="button-open-account">
               Open An Account
             </Button>
-            <Button size="lg" variant="outline" className="rounded-md">
+            <Button size="lg" variant="outline" className="rounded-md" data-testid="button-learn-more">
               Learn More
             </Button>
           </div>
@@ -126,7 +142,7 @@ export default function BankPage() {
               <p className="text-lg text-muted-foreground mb-8">
                 Join thousands of satisfied customers who trust us with their financial future.
               </p>
-              <Button size="lg" className="rounded-md">
+              <Button size="lg" className="rounded-md" onClick={handleGetStarted} data-testid="button-get-started">
                 Get Started Today
               </Button>
             </CardContent>
