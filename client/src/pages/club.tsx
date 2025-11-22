@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Utensils, Music, Trophy, Briefcase, Heart, Star, Wine, Zap, Phone, Mail } from "lucide-react";
+import { Users, Utensils, Music, Trophy, Briefcase, Heart, Star, Wine, Zap, Phone, Mail, CreditCard } from "lucide-react";
 import { Link } from "wouter";
 import clubLoungeImage from "@assets/generated_images/exclusive_club_lounge.png";
 import clubDiningImage from "@assets/generated_images/club_private_dining.png";
@@ -164,6 +164,100 @@ export default function ClubPage() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Membership Cards */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <Badge className="mb-4" data-testid="badge-cards">Membership Cards</Badge>
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold gradient-text mb-4" data-testid="text-cards-title">
+              Exclusive Member Cards
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Premium metal membership cards with exclusive perks, priority access, and concierge services
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                tier: "Silver Card",
+                color: "from-slate-400 to-slate-600",
+                benefits: [
+                  "Priority club access",
+                  "Dining discounts (10%)",
+                  "Concierge hotline",
+                  "Digital + Physical card",
+                  "Member directory access"
+                ],
+                icon: CreditCard
+              },
+              {
+                tier: "Gold Card",
+                color: "from-yellow-400 to-yellow-600",
+                benefits: [
+                  "VIP priority access",
+                  "Dining discounts (20%)",
+                  "24/7 premium concierge",
+                  "Luxury leather case",
+                  "Exclusive events access",
+                  "Personal member liaison"
+                ],
+                icon: CreditCard,
+                featured: true
+              },
+              {
+                tier: "Platinum Card",
+                color: "from-cyan-300 to-blue-600",
+                benefits: [
+                  "Absolute VIP access",
+                  "Unlimited dining credits",
+                  "Dedicated concierge",
+                  "Platinum leather case",
+                  "All exclusive events",
+                  "Personal account manager",
+                  "Lifetime membership option"
+                ],
+                icon: CreditCard
+              }
+            ].map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div key={idx} className="flex flex-col items-center" data-testid={`card-membership-${idx}`}>
+                  {/* Card Visual */}
+                  <div className={`w-full h-48 rounded-lg bg-gradient-to-br ${card.color} p-6 mb-6 flex flex-col justify-between shadow-2xl border border-white/10 hover-elevate transition-all ${card.featured ? 'ring-2 ring-primary scale-105' : ''}`}>
+                    <div className="flex justify-between items-start">
+                      <Icon className="w-8 h-8 text-white/80" />
+                      <Badge className="bg-white/20 text-white border-white/30">{card.tier}</Badge>
+                    </div>
+                    <div className="text-white">
+                      <p className="font-serif text-2xl font-bold">ELITE CLUB</p>
+                      <p className="text-sm text-white/70">Member Card</p>
+                    </div>
+                  </div>
+
+                  {/* Card Details */}
+                  <Card className={`w-full border-primary/20 ${card.featured ? 'ring-2 ring-primary' : ''}`}>
+                    <CardContent className="p-6">
+                      <h3 className="font-serif text-xl font-bold mb-4">{card.tier}</h3>
+                      <ul className="space-y-2 mb-6">
+                        {card.benefits.map((benefit, bidx) => (
+                          <li key={bidx} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <Star className="w-3 h-3 text-primary flex-shrink-0 mt-1" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Button className="w-full" variant={card.featured ? "default" : "outline"} data-testid={`button-card-${idx}`}>
+                        Get {card.tier}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
