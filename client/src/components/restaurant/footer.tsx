@@ -86,19 +86,25 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-privacy">
-                  Privacy Policy
-                </Button>
+                <Link href="/privacy-policy">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-privacy">
+                    Privacy Policy
+                  </Button>
+                </Link>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-terms">
-                  Terms of Service
-                </Button>
+                <Link href="/terms-of-service">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-terms">
+                    Terms of Service
+                  </Button>
+                </Link>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-cancellation">
-                  Cancellation Policy
-                </Button>
+                <Link href="/cancellation-policy">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-cancellation">
+                    Cancellation Policy
+                  </Button>
+                </Link>
               </li>
             </ul>
           </div>
