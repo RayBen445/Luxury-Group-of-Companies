@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star, Zap } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap, CreditCard } from "lucide-react";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -55,6 +55,16 @@ export default function GroupLandingPage() {
       features: ["Cloud Solutions", "AI Analytics", "Property Management", "Mobile Apps"],
       href: "/tech",
       color: "from-cyan-500/20 to-transparent"
+    },
+    {
+      id: "bank",
+      name: "Luxury Bank",
+      type: "Premium Banking Services",
+      icon: CreditCard,
+      description: "Exclusive financial solutions with wealth management, investments, and corporate banking",
+      features: ["Wealth Management", "Investment Services", "Corporate Banking", "Premium Cards"],
+      href: "/bank",
+      color: "from-green-500/20 to-transparent"
     }
   ];
 
