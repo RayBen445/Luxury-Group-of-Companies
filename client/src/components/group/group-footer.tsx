@@ -32,12 +32,12 @@ export function GroupFooter() {
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div data-testid="footer-section-brand">
-            <h3 className="font-serif text-2xl font-bold mb-4 gradient-text">Luxury Group</h3>
+            <h3 className="font-serif text-2xl font-bold mb-4 gradient-text">Luxury Group of Companies</h3>
             <p className="text-muted-foreground text-sm mb-4" data-testid="text-tagline">
               Where Elegance Meets Excellence.
             </p>
             <p className="text-muted-foreground text-sm" data-testid="text-footer-desc">
-              A collection of premium hospitality experiences across the globe.
+              A collection of premium hospitality experiences and lifestyle ventures across the globe.
             </p>
           </div>
 
@@ -123,12 +123,12 @@ export function GroupFooter() {
                   WhatsApp
                 </Button>
               </a>
-              <a href="mailto:info@luxurygroup.com">
+              <a href="mailto:luxurygroupofcompanies@gmail.com">
                 <Button variant="outline" className="w-full text-sm justify-start" data-testid="button-email-contact">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  info@luxurygroup.com
+                  luxurygroupofcompanies@gmail.com
                 </Button>
               </a>
             </div>
@@ -163,7 +163,7 @@ export function GroupFooter() {
         <div className="border-t pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm" data-testid="text-copyright">
-              © 2024 Luxury Group. All rights reserved.
+              © 2024 Luxury Group of Companies. All rights reserved.
             </p>
             <div className="flex gap-4">
               <Button variant="ghost" size="sm" data-testid="link-facebook">
