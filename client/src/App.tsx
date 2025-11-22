@@ -11,7 +11,6 @@ import { Preloader } from "@/components/restaurant/preloader";
 import { ScrollToTop } from "@/components/restaurant/scroll-to-top";
 import { FloatingReserveButton } from "@/components/restaurant/floating-reserve";
 import { WhatsAppChat } from "@/components/restaurant/whatsapp-chat";
-import { LiveChat } from "@/components/restaurant/live-chat";
 import NotFound from "@/pages/not-found";
 import GroupLandingPage from "@/pages/group-landing";
 import HomePage from "@/pages/home";
@@ -97,6 +96,18 @@ function NavigationWrapper() {
   return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }
 
+function ConditionalChatComponents() {
+  const [location] = useLocation();
+  const isRestaurantRoute = location.startsWith("/restaurant") || location.startsWith("/menu") || location.startsWith("/food-ordering") || location.startsWith("/reservations") || location.startsWith("/chefs") || location.startsWith("/gallery") || location.startsWith("/about") || location.startsWith("/contact") || location.startsWith("/policies") || location.startsWith("/privacy-policy") || location.startsWith("/terms-of-service") || location.startsWith("/cancellation-policy") || location.startsWith("/loyalty") || location.startsWith("/settings");
+
+  if (!isRestaurantRoute) {
+    return null;
+  }
+
+  const { LiveChat } = require("@/components/restaurant/live-chat");
+  return <LiveChat />;
+}
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark">
@@ -109,7 +120,7 @@ function App() {
           <ScrollToTop />
           <FloatingReserveButton />
           <WhatsAppChat />
-          <LiveChat />
+          <ConditionalChatComponents />
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>
