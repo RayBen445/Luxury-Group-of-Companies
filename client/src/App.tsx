@@ -1,10 +1,11 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/restaurant/navigation";
+import { GroupNavigation } from "@/components/group/group-navigation";
 import { Footer } from "@/components/restaurant/footer";
 import { Preloader } from "@/components/restaurant/preloader";
 import { ScrollToTop } from "@/components/restaurant/scroll-to-top";
@@ -12,6 +13,7 @@ import { FloatingReserveButton } from "@/components/restaurant/floating-reserve"
 import { WhatsAppChat } from "@/components/restaurant/whatsapp-chat";
 import { LiveChat } from "@/components/restaurant/live-chat";
 import NotFound from "@/pages/not-found";
+import GroupLandingPage from "@/pages/group-landing";
 import HomePage from "@/pages/home";
 import MenuPage from "@/pages/menu";
 import ReservationsPage from "@/pages/reservations";
@@ -26,11 +28,39 @@ import SettingsPage from "@/pages/settings";
 import PrivacyPolicyPage from "@/pages/privacy-policy";
 import TermsOfServicePage from "@/pages/terms-of-service";
 import CancellationPolicyPage from "@/pages/cancellation-policy";
+import HotelPage from "@/pages/hotel";
+import ClubPage from "@/pages/club";
+import LoungePage from "@/pages/lounge";
 
 function Router() {
+  const [location] = useLocation();
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge");
+
   return (
     <Switch>
-      <Route path="/" component={HomePage} />
+      {/* Group Properties */}
+      <Route path="/" component={GroupLandingPage} />
+      <Route path="/hotel" component={HotelPage} />
+      <Route path="/club" component={ClubPage} />
+      <Route path="/lounge" component={LoungePage} />
+      
+      {/* Restaurant Routes */}
+      <Route path="/restaurant" component={HomePage} />
+      <Route path="/restaurant/menu" component={MenuPage} />
+      <Route path="/restaurant/food-ordering" component={FoodOrderingPage} />
+      <Route path="/restaurant/reservations" component={ReservationsPage} />
+      <Route path="/restaurant/chefs" component={ChefsPage} />
+      <Route path="/restaurant/gallery" component={GalleryPage} />
+      <Route path="/restaurant/about" component={AboutPage} />
+      <Route path="/restaurant/contact" component={ContactPage} />
+      <Route path="/restaurant/policies" component={PoliciesPage} />
+      <Route path="/restaurant/privacy-policy" component={PrivacyPolicyPage} />
+      <Route path="/restaurant/terms-of-service" component={TermsOfServicePage} />
+      <Route path="/restaurant/cancellation-policy" component={CancellationPolicyPage} />
+      <Route path="/restaurant/loyalty" component={LoyaltyPage} />
+      <Route path="/restaurant/settings" component={SettingsPage} />
+      
+      {/* Legacy routes for backward compatibility */}
       <Route path="/menu" component={MenuPage} />
       <Route path="/food-ordering" component={FoodOrderingPage} />
       <Route path="/reservations" component={ReservationsPage} />
@@ -44,9 +74,17 @@ function Router() {
       <Route path="/cancellation-policy" component={CancellationPolicyPage} />
       <Route path="/loyalty" component={LoyaltyPage} />
       <Route path="/settings" component={SettingsPage} />
+      
       <Route component={NotFound} />
     </Switch>
   );
+}
+
+function NavigationWrapper() {
+  const [location] = useLocation();
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge");
+
+  return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }
 
 function App() {
@@ -55,7 +93,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Preloader />
-          <Navigation />
+          <NavigationWrapper />
           <Router />
           <Footer />
           <ScrollToTop />
