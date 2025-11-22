@@ -18,12 +18,14 @@ import ChefsPage from "@/pages/chefs";
 import GalleryPage from "@/pages/gallery";
 import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
+import FoodOrderingPage from "@/pages/food-ordering";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
       <Route path="/menu" component={MenuPage} />
+      <Route path="/food-ordering" component={FoodOrderingPage} />
       <Route path="/reservations" component={ReservationsPage} />
       <Route path="/chefs" component={ChefsPage} />
       <Route path="/gallery" component={GalleryPage} />

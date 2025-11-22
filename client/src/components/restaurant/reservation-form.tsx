@@ -10,10 +10,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { insertReservationSchema } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
+import { tablePricing } from "@shared/table-pricing";
 
 export function ReservationForm() {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [selectedTableType, setSelectedTableType] = useState("standard");
+  const selectedTable = tablePricing.find(t => t.id === selectedTableType);
 
   const form = useForm({
     resolver: zodResolver(insertReservationSchema),
@@ -28,6 +32,9 @@ export function ReservationForm() {
       specialRequests: "",
     },
   });
+
+  const guestCount = form.watch("guests");
+  const tableCost = selectedTable ? selectedTable.pricePerPerson * guestCount : 0;
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
@@ -66,7 +73,65 @@ export function ReservationForm() {
           </Card>
         )}
 
-        <Card className="glass-effect" data-aos="fade-up">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8" data-aos="fade-up">
+          {tablePricing.map((table) => (
+            <Card
+              key={table.id}
+              className={`cursor-pointer hover-elevate active-elevate-2 transition-all ${
+                selectedTableType === table.id ? "ring-2 ring-primary" : ""
+              }`}
+              onClick={() => setSelectedTableType(table.id)}
+              data-testid={`card-table-${table.id}`}
+            >
+              <CardContent className="p-6">
+                <h3 className="font-serif text-xl font-bold mb-2" data-testid={`text-table-name-${table.id}`}>
+                  {table.name}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4" data-testid={`text-table-desc-${table.id}`}>
+                  {table.description}
+                </p>
+                <div className="mb-4">
+                  <p className="text-2xl font-bold text-primary mb-1" data-testid={`text-table-price-${table.id}`}>
+                    ${table.pricePerPerson}/person
+                  </p>
+                  <p className="text-xs text-muted-foreground" data-testid={`text-table-max-${table.id}`}>
+                    Up to {table.maxGuests} guests
+                  </p>
+                </div>
+                <ul className="space-y-2 text-xs">
+                  {table.features.slice(0, 3).map((feature, idx) => (
+                    <li key={idx} className="text-muted-foreground flex gap-2" data-testid={`text-feature-${table.id}-${idx}`}>
+                      <span>✓</span> {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        <Card className="glass-effect mb-8" data-aos="fade-up" data-aos-delay="100" data-testid="card-reservation-pricing">
+          <CardContent className="p-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h4 className="font-semibold mb-1" data-testid="text-pricing-header">Estimated Cost</h4>
+                <p className="text-sm text-muted-foreground" data-testid="text-pricing-desc">
+                  {selectedTable?.name} × {guestCount} guests
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-3xl font-bold text-primary" data-testid="text-total-cost">
+                  ${tableCost.toFixed(2)}
+                </p>
+                <p className="text-xs text-muted-foreground" data-testid="text-pricing-note">
+                  (Before food charges)
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-effect" data-aos="fade-up" data-aos-delay="200">
           <CardContent className="p-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

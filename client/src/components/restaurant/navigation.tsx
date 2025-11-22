@@ -20,6 +20,7 @@ export function Navigation() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Menu", href: "/menu" },
+    { name: "Order", href: "/food-ordering" },
     { name: "Reservations", href: "/reservations" },
     { name: "Chefs", href: "/chefs" },
     { name: "Gallery", href: "/gallery" },
