@@ -9,7 +9,6 @@ import { GroupNavigation } from "@/components/group/group-navigation";
 import { FooterWrapper } from "@/components/footer-wrapper";
 import { Preloader } from "@/components/restaurant/preloader";
 import { ScrollToTop } from "@/components/restaurant/scroll-to-top";
-import { FloatingReserveButton } from "@/components/restaurant/floating-reserve";
 import { WhatsAppChat } from "@/components/restaurant/whatsapp-chat";
 import NotFound from "@/pages/not-found";
 import GroupLandingPage from "@/pages/group-landing";
@@ -96,7 +95,7 @@ function NavigationWrapper() {
   return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }
 
-function ConditionalChatComponents() {
+function ConditionalRestaurantComponents() {
   const [location] = useLocation();
   const isRestaurantRoute = location.startsWith("/restaurant") || location.startsWith("/menu") || location.startsWith("/food-ordering") || location.startsWith("/reservations") || location.startsWith("/chefs") || location.startsWith("/gallery") || location.startsWith("/about") || location.startsWith("/contact") || location.startsWith("/policies") || location.startsWith("/privacy-policy") || location.startsWith("/terms-of-service") || location.startsWith("/cancellation-policy") || location.startsWith("/loyalty") || location.startsWith("/settings");
 
@@ -105,7 +104,13 @@ function ConditionalChatComponents() {
   }
 
   const { LiveChat } = require("@/components/restaurant/live-chat");
-  return <LiveChat />;
+  const { FloatingReserveButton } = require("@/components/restaurant/floating-reserve");
+  return (
+    <>
+      <FloatingReserveButton />
+      <LiveChat />
+    </>
+  );
 }
 
 function App() {
@@ -118,9 +123,8 @@ function App() {
           <Router />
           <FooterWrapper />
           <ScrollToTop />
-          <FloatingReserveButton />
           <WhatsAppChat />
-          <ConditionalChatComponents />
+          <ConditionalRestaurantComponents />
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>
