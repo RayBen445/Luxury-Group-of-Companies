@@ -52,7 +52,7 @@ export function LoungeFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/group">
                   <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-back">
                     Back to Group
                   </Button>
