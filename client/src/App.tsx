@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/restaurant/navigation";
 import { GroupNavigation } from "@/components/group/group-navigation";
-import { Footer } from "@/components/restaurant/footer";
+import { FooterWrapper } from "@/components/footer-wrapper";
 import { Preloader } from "@/components/restaurant/preloader";
 import { ScrollToTop } from "@/components/restaurant/scroll-to-top";
 import { FloatingReserveButton } from "@/components/restaurant/floating-reserve";
@@ -97,7 +97,7 @@ function App() {
           <Preloader />
           <NavigationWrapper />
           <Router />
-          <Footer />
+          <FooterWrapper />
           <ScrollToTop />
           <FloatingReserveButton />
           <WhatsAppChat />
