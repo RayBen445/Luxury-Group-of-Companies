@@ -11,7 +11,7 @@ export function FooterWrapper() {
   const [location] = useLocation();
 
   // Determine which footer to show based on the current route
-  if (location === "/group" || location === "") {
+  if (location === "/" || location === "") {
     return <GroupFooter />;
   } else if (location.startsWith("/hotel")) {
     return <HotelFooter />;
