@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
-import { CreditCard, TrendingUp, ArrowRight, ArrowLeft, Plus } from "lucide-react";
+import { CreditCard, TrendingUp, ArrowRight, ArrowLeft, Plus, Search, Home, HelpCircle } from "lucide-react";
 import type { BankAccount, BankCard, Transaction } from "@shared/schema";
 
 export default function BankDashboardPage() {
@@ -86,17 +86,41 @@ export default function BankDashboardPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-20 px-4">
       <div className="container mx-auto max-w-6xl">
-        <Link href="/bank">
-          <Button variant="ghost" className="mb-8 gap-2" data-testid="button-back">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Bank
-          </Button>
-        </Link>
+        {/* Header with Quick Actions */}
+        <div className="flex justify-between items-start mb-8">
+          <Link href="/bank">
+            <Button variant="ghost" className="gap-2" data-testid="button-back">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Bank
+            </Button>
+          </Link>
+          <div className="flex gap-2">
+            <Link href="/bank">
+              <Button variant="outline" size="sm" className="gap-2" data-testid="button-home">
+                <Home className="w-4 h-4" />
+                Home
+              </Button>
+            </Link>
+            <Link href="/bank/open-account">
+              <Button variant="outline" size="sm" className="gap-2" data-testid="button-open-new">
+                <Plus className="w-4 h-4" />
+                Open Account
+              </Button>
+            </Link>
+            <Button variant="outline" size="sm" className="gap-2" data-testid="button-help">
+              <HelpCircle className="w-4 h-4" />
+              Help
+            </Button>
+          </div>
+        </div>
 
         {/* Search Section */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Access Your Accounts</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="w-5 h-5" />
+              Access Your Accounts
+            </CardTitle>
             <CardDescription>Enter your email to view your accounts and cards</CardDescription>
           </CardHeader>
           <CardContent>
@@ -106,6 +130,7 @@ export default function BankDashboardPage() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleSearch()}
                 data-testid="input-search-email"
               />
               <Button onClick={handleSearch} data-testid="button-search">
@@ -127,7 +152,7 @@ export default function BankDashboardPage() {
                       <div className="flex justify-between items-start">
                         <div>
                           <CardTitle>{account.firstName} {account.lastName}</CardTitle>
-                          <CardDescription capitalize>{account.accountType} Account</CardDescription>
+                          <CardDescription className="capitalize">{account.accountType.replace("_", " ")} Account</CardDescription>
                         </div>
                         <Badge>{account.status}</Badge>
                       </div>
@@ -135,11 +160,11 @@ export default function BankDashboardPage() {
                     <CardContent className="space-y-4">
                       <div>
                         <p className="text-sm text-muted-foreground">Account Number</p>
-                        <p className="font-mono font-semibold">{account.accountNumber}</p>
+                        <p className="font-mono font-semibold text-lg">{account.accountNumber}</p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">Balance</p>
-                        <p className="text-2xl font-bold">${parseFloat(account.balance).toFixed(2)}</p>
+                        <p className="text-3xl font-bold text-primary">${parseFloat(account.balance).toFixed(2)}</p>
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground mb-2">Created</p>
@@ -170,7 +195,7 @@ export default function BankDashboardPage() {
                 {selectedAccountCards.length > 0 ? (
                   <div className="grid md:grid-cols-2 gap-6">
                     {selectedAccountCards.map((card: BankCard) => (
-                      <Card key={card.id} className="bg-gradient-to-br from-primary/10 to-accent/10">
+                      <Card key={card.id} className="bg-gradient-to-br from-primary/10 to-accent/10 hover-elevate">
                         <CardContent className="pt-6">
                           <div className="space-y-4">
                             <div className="flex justify-between items-start">
@@ -204,6 +229,7 @@ export default function BankDashboardPage() {
                 ) : (
                   <Card>
                     <CardContent className="pt-6 text-center">
+                      <CreditCard className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
                       <p className="text-muted-foreground mb-4">No cards yet. Order your first card now!</p>
                       <Button 
                         onClick={() => handleOrderCard(accounts[0].id)}
@@ -226,7 +252,7 @@ export default function BankDashboardPage() {
                     <CardContent className="pt-6">
                       <div className="space-y-4">
                         {selectedAccountTransactions.map((txn: Transaction) => (
-                          <div key={txn.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50">
+                          <div key={txn.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                             <div className="flex items-center gap-3">
                               <div className="bg-primary/10 p-2 rounded-lg">
                                 {txn.type === "deposit" ? (
@@ -241,7 +267,7 @@ export default function BankDashboardPage() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className={`font-semibold ${txn.type === "deposit" ? "text-green-600" : "text-red-600"}`}>
+                              <p className={`font-semibold text-lg ${txn.type === "deposit" ? "text-green-600" : "text-red-600"}`}>
                                 {txn.type === "deposit" ? "+" : "-"}${Math.abs(parseFloat(txn.amount)).toFixed(2)}
                               </p>
                               <p className="text-xs text-muted-foreground">
@@ -256,6 +282,7 @@ export default function BankDashboardPage() {
                 ) : (
                   <Card>
                     <CardContent className="pt-6 text-center">
+                      <TrendingUp className="w-12 h-12 mx-auto mb-4 text-muted-foreground opacity-50" />
                       <p className="text-muted-foreground">No transactions yet</p>
                     </CardContent>
                   </Card>
@@ -267,19 +294,35 @@ export default function BankDashboardPage() {
 
         {!searchEmail && (
           <Card className="text-center">
-            <CardContent className="pt-6">
-              <TrendingUp className="w-12 h-12 mx-auto mb-4 text-primary opacity-50" />
-              <p className="text-muted-foreground">Enter your email above to access your accounts</p>
+            <CardContent className="pt-12 pb-12">
+              <Search className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-30" />
+              <h3 className="text-xl font-semibold mb-2">Access Your Accounts</h3>
+              <p className="text-muted-foreground mb-6">Enter your email above to view your accounts, cards, and transactions</p>
+              <div className="flex gap-2 justify-center flex-wrap">
+                <Link href="/bank/open-account">
+                  <Button className="gap-2" data-testid="button-create-account">
+                    <Plus className="w-4 h-4" />
+                    Create Account
+                  </Button>
+                </Link>
+                <Link href="/bank">
+                  <Button variant="outline" data-testid="button-learn">
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
             </CardContent>
           </Card>
         )}
 
         {searchEmail && accounts.length === 0 && (
           <Card className="text-center">
-            <CardContent className="pt-6">
-              <p className="text-muted-foreground mb-4">No accounts found for this email</p>
+            <CardContent className="pt-12 pb-12">
+              <p className="text-muted-foreground mb-6">No accounts found for this email</p>
               <Link href="/bank/open-account">
-                <Button data-testid="button-create-account">Create Account</Button>
+                <Button data-testid="button-create-first-account">
+                  Create Your First Account
+                </Button>
               </Link>
             </CardContent>
           </Card>
