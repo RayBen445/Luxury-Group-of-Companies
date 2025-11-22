@@ -10,6 +10,7 @@ import { Preloader } from "@/components/restaurant/preloader";
 import { ScrollToTop } from "@/components/restaurant/scroll-to-top";
 import { FloatingReserveButton } from "@/components/restaurant/floating-reserve";
 import { WhatsAppChat } from "@/components/restaurant/whatsapp-chat";
+import { LiveChat } from "@/components/restaurant/live-chat";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
 import MenuPage from "@/pages/menu";
@@ -20,6 +21,8 @@ import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
 import FoodOrderingPage from "@/pages/food-ordering";
 import PoliciesPage from "@/pages/policies";
+import LoyaltyPage from "@/pages/loyalty";
+import SettingsPage from "@/pages/settings";
 
 function Router() {
   return (
@@ -33,6 +36,8 @@ function Router() {
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />
       <Route path="/policies" component={PoliciesPage} />
+      <Route path="/loyalty" component={LoyaltyPage} />
+      <Route path="/settings" component={SettingsPage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -50,6 +55,7 @@ function App() {
           <ScrollToTop />
           <FloatingReserveButton />
           <WhatsAppChat />
+          <LiveChat />
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>
