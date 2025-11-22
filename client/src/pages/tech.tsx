@@ -136,7 +136,13 @@ export default function TechPage() {
                     </div>
                   </div>
 
-                  <Button size="lg" data-testid={`button-learn-more-${idx}`}>
+                  <Button 
+                    size="lg" 
+                    onClick={() => {
+                      document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    data-testid={`button-learn-more-${idx}`}
+                  >
                     Learn More
                   </Button>
                 </div>
@@ -147,7 +153,7 @@ export default function TechPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
+      <section id="services-section" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <Badge className="mb-4" data-testid="badge-services">Services</Badge>
