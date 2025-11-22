@@ -79,6 +79,13 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Policies</h4>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href="/policies">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-policies">
+                    Restaurant Policies
+                  </Button>
+                </Link>
+              </li>
+              <li>
                 <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-privacy">
                   Privacy Policy
                 </Button>
