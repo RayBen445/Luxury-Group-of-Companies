@@ -31,10 +31,11 @@ import CancellationPolicyPage from "@/pages/cancellation-policy";
 import HotelPage from "@/pages/hotel";
 import ClubPage from "@/pages/club";
 import LoungePage from "@/pages/lounge";
+import TechPage from "@/pages/tech";
 
 function Router() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech");
 
   return (
     <Switch>
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/hotel" component={HotelPage} />
       <Route path="/club" component={ClubPage} />
       <Route path="/lounge" component={LoungePage} />
+      <Route path="/tech" component={TechPage} />
       
       {/* Restaurant Routes */}
       <Route path="/restaurant" component={HomePage} />
@@ -82,7 +84,7 @@ function Router() {
 
 function NavigationWrapper() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech");
 
   return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }

@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap } from "lucide-react";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -45,6 +45,16 @@ export default function GroupLandingPage() {
       features: ["Live Entertainment", "Premium Cocktails", "VIP Service", "Private Events"],
       href: "/lounge",
       color: "from-rose-500/20 to-transparent"
+    },
+    {
+      id: "tech",
+      name: "Royale Technologies",
+      type: "Enterprise Technology Solutions",
+      icon: Zap,
+      description: "Cutting-edge technology platforms powering luxury hospitality operations worldwide",
+      features: ["Cloud Solutions", "AI Analytics", "Property Management", "Mobile Apps"],
+      href: "/tech",
+      color: "from-cyan-500/20 to-transparent"
     }
   ];
 
@@ -76,7 +86,7 @@ export default function GroupLandingPage() {
           </div>
 
           {/* Properties Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((property) => {
               const PropertyIcon = property.icon;
               return (
@@ -118,15 +128,15 @@ export default function GroupLandingPage() {
           <div className="text-center mb-12">
             <Badge className="mb-4">About Our Group</Badge>
             <h2 className="font-serif text-4xl font-bold mb-4 gradient-text">
-              Luxury Hospitality Excellence
+              Luxury Hospitality Group
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                number: "4",
-                label: "Luxury Properties",
-                desc: "Handpicked establishments offering world-class experiences"
+                number: "5",
+                label: "World-Class Properties",
+                desc: "Luxury hospitality and technology solutions"
               },
               {
                 number: "2000+",
@@ -135,8 +145,8 @@ export default function GroupLandingPage() {
               },
               {
                 number: "10000+",
-                label: "Satisfied Guests",
-                desc: "Trusted by discerning clientele worldwide"
+                label: "Satisfied Clients",
+                desc: "Trusted by discerning guests and businesses worldwide"
               }
             ].map((stat, idx) => (
               <Card key={idx} className="text-center border-primary/20" data-testid={`card-stat-${idx}`}>
