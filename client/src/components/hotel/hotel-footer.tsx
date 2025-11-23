@@ -98,6 +98,11 @@ export function HotelFooter() {
                   Fine Dining
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-create-account">
+                  Create Account
+                </Button>
+              </li>
             </ul>
           </div>
 

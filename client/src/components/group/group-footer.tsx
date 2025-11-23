@@ -128,6 +128,11 @@ export function GroupFooter() {
                 </Link>
               </li>
               <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-learn-more">
+                  Learn More
+                </Button>
+              </li>
+              <li>
                 <Link href="/privacy-policy">
                   <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-privacy">
                     Privacy Policy

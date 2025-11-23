@@ -98,6 +98,11 @@ export function AirlineFooter() {
                   Lounge Access
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-book-flight">
+                  Book Flight
+                </Button>
+              </li>
             </ul>
           </div>
 

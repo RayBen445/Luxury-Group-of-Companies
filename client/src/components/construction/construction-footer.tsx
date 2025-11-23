@@ -98,6 +98,11 @@ export function ConstructionFooter() {
                   Design & Planning
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-get-quote">
+                  Get a Quote
+                </Button>
+              </li>
             </ul>
           </div>
 

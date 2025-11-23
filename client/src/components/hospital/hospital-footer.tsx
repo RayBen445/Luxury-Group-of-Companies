@@ -98,6 +98,11 @@ export function HospitalFooter() {
                   Wellness
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-book-appointment">
+                  Book Appointment
+                </Button>
+              </li>
             </ul>
           </div>
 

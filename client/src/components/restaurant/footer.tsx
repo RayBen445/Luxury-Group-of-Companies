@@ -86,6 +86,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-reserve-table">
+                  Reserve a Table
+                </Button>
+              </li>
+              <li>
                 <Link href="/privacy-policy">
                   <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-privacy">
                     Privacy Policy

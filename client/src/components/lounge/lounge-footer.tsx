@@ -98,6 +98,11 @@ export function LoungeFooter() {
                   Reservations
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-explore">
+                  Explore Menu
+                </Button>
+              </li>
             </ul>
           </div>
 

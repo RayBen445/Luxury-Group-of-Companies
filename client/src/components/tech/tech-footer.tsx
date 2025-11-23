@@ -98,6 +98,11 @@ export function TechFooter() {
                   Support
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-get-started">
+                  Get Started
+                </Button>
+              </li>
             </ul>
           </div>
 

@@ -98,6 +98,11 @@ export function BankFooter() {
                   Wealth Management
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-open-account">
+                  Open Account
+                </Button>
+              </li>
             </ul>
           </div>
 

@@ -98,6 +98,11 @@ export function UniversityFooter() {
                   Admissions
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-apply-now">
+                  Apply Now
+                </Button>
+              </li>
             </ul>
           </div>
 

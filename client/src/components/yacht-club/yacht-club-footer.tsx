@@ -98,6 +98,11 @@ export function YachtClubFooter() {
                   Charter Services
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-membership">
+                  Get Membership
+                </Button>
+              </li>
             </ul>
           </div>
 

@@ -98,6 +98,11 @@ export function ClubFooter() {
                   Entertainment
                 </Button>
               </li>
+              <li>
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-join-now">
+                  Join Now
+                </Button>
+              </li>
             </ul>
           </div>
 
