@@ -340,3 +340,38 @@ export const insertConsultationSchema = createInsertSchema(consultations).omit({
 
 export type InsertConsultation = z.infer<typeof insertConsultationSchema>;
 export type Consultation = typeof consultations.$inferSelect;
+
+// Car Company Schemas
+export const vehicles = pgTable("vehicles", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  year: integer("year").notNull(),
+  type: text("type").notNull(),
+  price: numeric("price", { precision: 12, scale: 2 }).notNull(),
+  horsepower: integer("horsepower").notNull(),
+  acceleration: numeric("acceleration", { precision: 4, scale: 2 }).notNull(),
+  transmission: text("transmission").notNull(),
+  range: text("range"),
+  mpg: text("mpg"),
+  isElectric: boolean("is_electric").default(false),
+  isNew: boolean("is_new").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertVehicleSchema = createInsertSchema(vehicles).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  name: z.string().min(1),
+  year: z.number().min(2000),
+  type: z.enum(["sedan", "suv", "sports", "electric", "luxury"]),
+  price: z.number().positive(),
+  horsepower: z.number().positive(),
+  acceleration: z.number().positive(),
+  transmission: z.string().min(1),
+  range: z.string().optional(),
+  mpg: z.string().optional(),
+});
+
+export type InsertVehicle = z.infer<typeof insertVehicleSchema>;
+export type Vehicle = typeof vehicles.$inferSelect;

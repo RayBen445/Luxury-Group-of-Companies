@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart, Car } from "lucide-react";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -125,6 +125,16 @@ export default function GroupLandingPage() {
       features: ["10+ Categories", "Organic Selection", "Express Delivery", "Premium Quality"],
       href: "/supermarket",
       color: "from-green-500/20 to-transparent"
+    },
+    {
+      id: "car-company",
+      name: "Royale Luxury Motors",
+      type: "Premium Automotive",
+      icon: Car,
+      description: "Luxury automotive group producing, selling, and leasing the world's finest premium vehicles with expert service",
+      features: ["Produce", "Buy & Lease", "Service & Maintenance", "Test Drive Available"],
+      href: "/car-company",
+      color: "from-slate-500/20 to-transparent"
     }
   ];
 

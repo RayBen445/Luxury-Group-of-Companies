@@ -8,6 +8,7 @@ import {
   insertCartItemSchema,
   insertOrderSchema,
   insertReviewSchema,
+  insertVehicleSchema,
 } from "@shared/schema";
 import { z } from "zod";
 
@@ -286,6 +287,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching reviews:", error);
       res.status(500).json({ error: "Failed to fetch reviews" });
+    }
+  });
+
+  // Vehicles
+  app.post("/api/vehicles", async (req, res) => {
+    try {
+      const parsed = insertVehicleSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid vehicle data" });
+      }
+      const vehicle = await storage.createVehicle(parsed.data);
+      res.json(vehicle);
+    } catch (error) {
+      console.error("Error creating vehicle:", error);
+      res.status(500).json({ error: "Failed to create vehicle" });
+    }
+  });
+
+  app.get("/api/vehicles", async (req, res) => {
+    try {
+      const vehicles = await storage.getVehicles();
+      res.json(vehicles);
+    } catch (error) {
+      console.error("Error fetching vehicles:", error);
+      res.status(500).json({ error: "Failed to fetch vehicles" });
+    }
+  });
+
+  app.get("/api/vehicles/:id", async (req, res) => {
+    try {
+      const vehicle = await storage.getVehicle(req.params.id);
+      if (!vehicle) {
+        return res.status(404).json({ error: "Vehicle not found" });
+      }
+      res.json(vehicle);
+    } catch (error) {
+      console.error("Error fetching vehicle:", error);
+      res.status(500).json({ error: "Failed to fetch vehicle" });
+    }
+  });
+
+  app.get("/api/vehicles/type/:type", async (req, res) => {
+    try {
+      const vehicles = await storage.getVehiclesByType(req.params.type);
+      res.json(vehicles);
+    } catch (error) {
+      console.error("Error fetching vehicles by type:", error);
+      res.status(500).json({ error: "Failed to fetch vehicles" });
     }
   });
 
