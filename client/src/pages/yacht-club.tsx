@@ -100,9 +100,11 @@ export default function YachtClubPage() {
           <p className="text-xl text-white/90 max-w-3xl mb-8 drop-shadow-md" data-testid="text-yacht-club-desc">
             An exclusive maritime sanctuary offering premium yachting experiences, world-class amenities, and unparalleled luxury on the water.
           </p>
-          <Button size="lg" className="pulse-gold" data-testid="button-join-club">
-            Join the Club
-          </Button>
+          <a href="tel:+2348075614248">
+            <Button size="lg" className="pulse-gold" data-testid="button-join-club">
+              Join the Club
+            </Button>
+          </a>
         </div>
       </section>
 
@@ -246,11 +248,11 @@ export default function YachtClubPage() {
                 <h3 className="font-semibold mb-2">Email Us</h3>
                 <p className="text-muted-foreground mb-4">Get in touch via email</p>
                 <a 
-                  href="mailto:luxurygroupofcompanies@gmail.com"
+                  href="tel:+2348075614248"
                   className="text-primary hover:text-primary/80 font-semibold"
                   data-testid="link-email-yacht"
                 >
-                  luxurygroupofcompanies@gmail.com
+                  +234 807 561 4248
                 </a>
               </CardContent>
             </Card>
@@ -261,11 +263,11 @@ export default function YachtClubPage() {
                 <h3 className="font-semibold mb-2">Call Us</h3>
                 <p className="text-muted-foreground mb-4">Available for membership inquiries</p>
                 <a 
-                  href="tel:+2248075614248"
+                  href="tel:+2348075614248"
                   className="text-primary hover:text-primary/80 font-semibold"
                   data-testid="link-phone-yacht"
                 >
-                  +224 807 561 4248
+                  +234 807 561 4248
                 </a>
               </CardContent>
             </Card>

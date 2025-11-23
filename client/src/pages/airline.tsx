@@ -100,9 +100,11 @@ export default function AirlinePage() {
           <p className="text-xl text-white/90 max-w-3xl mb-8 drop-shadow-md" data-testid="text-airline-desc">
             Experience luxury aviation with our premium private jet charter services, featuring world-class comfort, personalized service, and exclusive access to global destinations.
           </p>
-          <Button size="lg" className="pulse-gold" data-testid="button-book-flight">
-            Book Your Flight
-          </Button>
+          <a href="tel:+2348075614248">
+            <Button size="lg" className="pulse-gold" data-testid="button-book-flight">
+              Book Your Flight
+            </Button>
+          </a>
         </div>
       </section>
 
@@ -244,11 +246,11 @@ export default function AirlinePage() {
                 <h3 className="font-semibold mb-2">Email Us</h3>
                 <p className="text-muted-foreground mb-4">Get in touch via email</p>
                 <a 
-                  href="mailto:luxurygroupofcompanies@gmail.com"
+                  href="tel:+2348075614248"
                   className="text-primary hover:text-primary/80 font-semibold"
                   data-testid="link-email-airline"
                 >
-                  luxurygroupofcompanies@gmail.com
+                  +234 807 561 4248
                 </a>
               </CardContent>
             </Card>
@@ -259,11 +261,11 @@ export default function AirlinePage() {
                 <h3 className="font-semibold mb-2">Call Us</h3>
                 <p className="text-muted-foreground mb-4">Available 24/7 for bookings</p>
                 <a 
-                  href="tel:+2248075614248"
+                  href="tel:+2348075614248"
                   className="text-primary hover:text-primary/80 font-semibold"
                   data-testid="link-phone-airline"
                 >
-                  +224 807 561 4248
+                  +234 807 561 4248
                 </a>
               </CardContent>
             </Card>

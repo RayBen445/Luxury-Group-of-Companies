@@ -266,7 +266,7 @@ export default function BankPage() {
             <Card className="hover-elevate">
               <CardContent className="pt-6">
                 <h3 className="font-semibold mb-2">Phone</h3>
-                <p className="text-muted-foreground">+224 807 561 4248</p>
+                <p className="text-muted-foreground">+234 807 561 4248</p>
               </CardContent>
             </Card>
             <Card className="hover-elevate">

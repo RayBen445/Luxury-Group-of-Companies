@@ -156,7 +156,7 @@ export default function CancellationPolicyPage() {
                 </p>
                 <ul className="space-y-2 ml-4">
                   <li data-testid="item-medical">
-                    <strong>Medical Emergency:</strong> Documentation may be required. Contact us immediately at +224 807 561 4248.
+                    <strong>Medical Emergency:</strong> Documentation may be required. Contact us immediately at +234 807 561 4248.
                   </li>
                   <li data-testid="item-weather">
                     <strong>Severe Weather or Natural Disasters:</strong> Full refund or rescheduling without penalty.
@@ -180,12 +180,12 @@ export default function CancellationPolicyPage() {
                 <div className="space-y-3">
                   <div className="p-4 bg-muted/50 rounded-lg" data-testid="item-method-whatsapp">
                     <h4 className="font-semibold mb-2" data-testid="text-method-whatsapp">WhatsApp (Fastest)</h4>
-                    <p className="text-sm" data-testid="text-whatsapp-number">+224 807 561 4248</p>
+                    <p className="text-sm" data-testid="text-whatsapp-number">+234 807 561 4248</p>
                     <p className="text-xs text-muted-foreground mt-1" data-testid="text-whatsapp-note">Response time: Less than 5 minutes during business hours</p>
                   </div>
                   <div className="p-4 bg-muted/50 rounded-lg" data-testid="item-method-phone">
                     <h4 className="font-semibold mb-2" data-testid="text-method-phone">Phone Call</h4>
-                    <p className="text-sm" data-testid="text-phone-number">+224 807 561 4248</p>
+                    <p className="text-sm" data-testid="text-phone-number">+234 807 561 4248</p>
                     <p className="text-xs text-muted-foreground mt-1" data-testid="text-phone-note">Hours: Daily 11 AM - 11 PM</p>
                   </div>
                   <div className="p-4 bg-muted/50 rounded-lg" data-testid="item-method-email">
@@ -280,8 +280,8 @@ export default function CancellationPolicyPage() {
                 We're here to help. If you have questions or need to discuss your specific situation, please reach out:
               </p>
               <div className="space-y-2" data-testid="contact-info">
-                <p className="font-semibold" data-testid="text-whatsapp">📱 WhatsApp: +224 807 561 4248</p>
-                <p className="font-semibold" data-testid="text-phone">☎️ Phone: +224 807 561 4248</p>
+                <p className="font-semibold" data-testid="text-whatsapp">📱 WhatsApp: +234 807 561 4248</p>
+                <p className="font-semibold" data-testid="text-phone">☎️ Phone: +234 807 561 4248</p>
                 <p className="font-semibold" data-testid="text-email">📧 Email: latavoroyale@gmail.com</p>
                 <p className="font-semibold" data-testid="text-hours">🕐 Hours: Daily 11 AM - 11 PM</p>
               </div>

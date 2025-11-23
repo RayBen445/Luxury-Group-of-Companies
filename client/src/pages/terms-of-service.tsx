@@ -193,7 +193,7 @@ export default function TermsOfServicePage() {
               </p>
               <div className="space-y-2" data-testid="contact-info">
                 <p className="font-semibold" data-testid="text-email">📧 Email: latavoroyale@gmail.com</p>
-                <p className="font-semibold" data-testid="text-whatsapp">📱 WhatsApp: +224 807 561 4248</p>
+                <p className="font-semibold" data-testid="text-whatsapp">📱 WhatsApp: +234 807 561 4248</p>
               </div>
             </CardContent>
           </Card>

@@ -251,7 +251,7 @@ export default function GroupLandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild variant="outline">
               <a href="https://wa.me/2248075614248" target="_blank" rel="noopener noreferrer">
-                WhatsApp: +224 807 561 4248
+                WhatsApp: +234 807 561 4248
               </a>
             </Button>
             <Button asChild variant="outline">

@@ -17,7 +17,7 @@ const policies: PolicySection[] = [
       "Reservations can be cancelled or modified up to 24 hours before your booked time with no penalty.",
       "Cancellations made less than 24 hours before reservation time may incur a cancellation fee equal to the table booking charge.",
       "No-shows will be charged the full table booking rate for your selected service level.",
-      "In case of emergency, please contact us immediately at +224 807 561 4248.",
+      "In case of emergency, please contact us immediately at +234 807 561 4248.",
       "Group reservations (8+ guests) require 48 hours notice for cancellation.",
     ],
   },
@@ -102,7 +102,7 @@ const policies: PolicySection[] = [
       "Promotional vouchers and coupons cannot be combined with other offers.",
       "Gift card balance can be checked on our website or by calling the restaurant.",
       "Lost or stolen gift cards can be replaced with proof of purchase.",
-      "Gift cards can be purchased online or by calling +224 807 561 4248.",
+      "Gift cards can be purchased online or by calling +234 807 561 4248.",
     ],
   },
   {
@@ -241,7 +241,7 @@ export default function PoliciesPage() {
               </p>
               <div className="space-y-2" data-testid="contact-info">
                 <p className="font-semibold" data-testid="text-contact-phone">
-                  📞 WhatsApp: +224 807 561 4248
+                  📞 WhatsApp: +234 807 561 4248
                 </p>
                 <p className="font-semibold" data-testid="text-contact-email">
                   📧 Email: latavoroyale@gmail.com

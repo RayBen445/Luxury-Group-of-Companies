@@ -390,7 +390,7 @@ export default function HotelPage() {
             <Card className="border-primary/20" data-testid="card-contact">
               <CardContent className="p-8">
                 <h3 className="font-semibold text-lg mb-4">Contact Info</h3>
-                <p className="text-muted-foreground mb-2">+224 807 561 4248</p>
+                <p className="text-muted-foreground mb-2">+234 807 561 4248</p>
                 <p className="text-muted-foreground mb-6">latavoroyale@gmail.com</p>
                 <Button className="w-full">Contact Now</Button>
               </CardContent>
