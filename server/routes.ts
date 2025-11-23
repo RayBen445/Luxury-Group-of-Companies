@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema, insertUserSchema } from "@shared/schema";
+import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema, insertUserSchema, insertConsultationSchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -10,7 +10,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const parsed = insertUserSchema.safeParse(req.body);
       if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid credentials" });
+        console.error("Validation failed:", parsed.error.errors);
+        return res.status(400).json({ error: "Invalid credentials", details: parsed.error.errors });
       }
       const existingUser = await storage.getUserByUsername(parsed.data.username);
       if (existingUser) {
@@ -21,7 +22,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error) {
       console.error("Error signing up:", error);
-      res.status(500).json({ error: "Failed to create account" });
+      console.error("Stack trace:", error instanceof Error ? error.stack : "");
+      res.status(500).json({ error: "Failed to create account", message: error instanceof Error ? error.message : "Unknown error" });
     }
   });
 
@@ -188,6 +190,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error creating transaction:", error);
       res.status(500).json({ error: "Failed to create transaction" });
+    }
+  });
+
+  // Consultation endpoints
+  app.post("/api/consultations", async (req, res) => {
+    try {
+      const parsed = insertConsultationSchema.safeParse(req.body);
+      if (!parsed.success) {
+        console.error("Consultation validation failed:", parsed.error.errors);
+        return res.status(400).json({ error: "Invalid consultation data", details: parsed.error.errors });
+      }
+      const consultation = await storage.createConsultation(parsed.data);
+      res.json(consultation);
+    } catch (error) {
+      console.error("Error scheduling consultation:", error);
+      res.status(500).json({ error: "Failed to schedule consultation" });
+    }
+  });
+
+  app.get("/api/consultations", async (req, res) => {
+    try {
+      const consultations = await storage.getConsultations();
+      res.json(consultations);
+    } catch (error) {
+      console.error("Error fetching consultations:", error);
+      res.status(500).json({ error: "Failed to fetch consultations" });
     }
   });
 

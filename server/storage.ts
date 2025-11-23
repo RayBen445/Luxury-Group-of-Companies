@@ -12,7 +12,9 @@ import {
   type BankCard, 
   type InsertBankCard, 
   type Transaction, 
-  type InsertTransaction 
+  type InsertTransaction,
+  type Consultation,
+  type InsertConsultation
 } from "@shared/schema";
 
 import { randomUUID } from "crypto";
@@ -37,6 +39,8 @@ export interface IStorage {
   getBankCardsByAccountId(accountId: string): Promise<BankCard[]>;
   createTransaction(transaction: InsertTransaction): Promise<Transaction>;
   getTransactionsByAccountId(accountId: string): Promise<Transaction[]>;
+  createConsultation(consultation: InsertConsultation): Promise<Consultation>;
+  getConsultations(): Promise<Consultation[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -47,6 +51,7 @@ export class MemStorage implements IStorage {
   private bankAccounts = new Map<string, BankAccount>();
   private bankCards = new Map<string, BankCard>();
   private transactions = new Map<string, Transaction>();
+  private consultations = new Map<string, Consultation>();
 
   /** Normalize undefined → null for schema compatibility */
   private normalize<T>(v: T | null | undefined): T | null {
@@ -229,6 +234,22 @@ export class MemStorage implements IStorage {
     const year = (now.getFullYear() + 5) % 100;
     const month = String(now.getMonth() + 1).padStart(2, "0");
     return `${month}/${year}`;
+  }
+
+  async createConsultation(data: InsertConsultation): Promise<Consultation> {
+    const id = randomUUID();
+    const consultation: Consultation = {
+      ...data,
+      id,
+      createdAt: new Date(),
+      message: data.message || null
+    };
+    this.consultations.set(id, consultation);
+    return consultation;
+  }
+
+  async getConsultations(): Promise<Consultation[]> {
+    return Array.from(this.consultations.values());
   }
 }
 
