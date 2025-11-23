@@ -1,20 +1,8 @@
-import type { Express, Request } from "express";
+import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema, insertUserSchema } from "@shared/schema";
 import { z } from "zod";
-
-// Type augmentation for express-session
-declare global {
-  namespace Express {
-    interface Request {
-      session: {
-        userId?: string;
-        destroy(callback: (err?: Error) => void): void;
-      };
-    }
-  }
-}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
@@ -29,7 +17,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ error: "Username already exists" });
       }
       const user = await storage.createUser(parsed.data);
-      req.session.userId = user.id;
+      req.session!.userId = user.id;
       res.json({ success: true });
     } catch (error) {
       console.error("Error signing up:", error);
@@ -51,7 +39,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user) {
         return res.status(401).json({ error: "Invalid credentials" });
       }
-      req.session.userId = user.id;
+      req.session!.userId = user.id;
       res.json({ success: true });
     } catch (error) {
       console.error("Error logging in:", error);
@@ -60,7 +48,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/auth/logout", (req, res) => {
-    req.session.destroy((err?: Error) => {
+    req.session!.destroy((err: any) => {
       if (err) {
         return res.status(500).json({ error: "Failed to logout" });
       }
