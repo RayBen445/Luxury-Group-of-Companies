@@ -10,6 +10,8 @@ import { FooterWrapper } from "@/components/footer-wrapper";
 import { Preloader } from "@/components/restaurant/preloader";
 import { ScrollToTop } from "@/components/restaurant/scroll-to-top";
 import { WhatsAppChat } from "@/components/restaurant/whatsapp-chat";
+import { LiveChat } from "@/components/restaurant/live-chat";
+import { FloatingReserveButton } from "@/components/restaurant/floating-reserve";
 import NotFound from "@/pages/not-found";
 import GroupLandingPage from "@/pages/group-landing";
 import HomePage from "@/pages/home";
@@ -105,8 +107,6 @@ function ConditionalRestaurantComponents() {
     return null;
   }
 
-  const { LiveChat } = require("@/components/restaurant/live-chat");
-  const { FloatingReserveButton } = require("@/components/restaurant/floating-reserve");
   return (
     <>
       <FloatingReserveButton />
