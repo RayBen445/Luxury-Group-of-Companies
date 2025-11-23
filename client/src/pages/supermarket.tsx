@@ -3,13 +3,13 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingCart, Search, Truck, Shield, Heart } from "lucide-react";
+import { ShoppingCart, Search, Truck, Shield, Heart, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 type Product = any;
 type Category = any;
 
-export default function HomePage() {
+export default function SupermarketPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,17 +31,36 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      {/* Quick Navigation */}
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b">
+        <div className="container mx-auto max-w-6xl px-4 py-3">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            <Link href="/">
+              <Button variant="outline" size="sm" className="gap-2 whitespace-nowrap" data-testid="button-back-home">
+                ← Back to Properties
+              </Button>
+            </Link>
+            <Link href="/supermarket/cart">
+              <Button variant="outline" size="sm" className="gap-2 whitespace-nowrap" data-testid="button-view-cart">
+                <ShoppingCart className="w-4 h-4" />
+                My Cart
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="container mx-auto max-w-6xl text-center">
           <Badge className="mb-4" data-testid="badge-supermarket">
-            Welcome
+            Royale Luxury Collection
           </Badge>
           <h1 className="font-serif text-5xl sm:text-6xl font-bold mb-6 gradient-text" data-testid="text-title">
-            World Class Supermarket
+            Royale Luxury Supermarket
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8" data-testid="text-subtitle">
-            Everything you need in one place. Fresh produce, premium quality, fast delivery.
+            Everything you need in one place. Premium selection, exceptional quality, express delivery available.
           </p>
 
           {/* Search Bar */}
@@ -63,15 +82,15 @@ export default function HomePage() {
           <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto" data-testid="grid-features">
             <div className="text-center" data-testid="feature-delivery">
               <Truck className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <p className="text-sm font-medium">Fast Delivery</p>
+              <p className="text-sm font-medium">Express Delivery</p>
             </div>
             <div className="text-center" data-testid="feature-quality">
               <Shield className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <p className="text-sm font-medium">Quality Assured</p>
+              <p className="text-sm font-medium">Premium Quality</p>
             </div>
-            <div className="text-center" data-testid="feature-savings">
+            <div className="text-center" data-testid="feature-value">
               <Heart className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <p className="text-sm font-medium">Best Prices</p>
+              <p className="text-sm font-medium">Best Value</p>
             </div>
           </div>
         </div>
@@ -154,7 +173,7 @@ export default function HomePage() {
 
 function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/supermarket/product/${product.id}`}>
       <Card className="hover-elevate cursor-pointer h-full" data-testid={`card-product-${product.id}`}>
         <CardContent className="p-4">
           <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center text-4xl" data-testid={`img-product-${product.id}`}>

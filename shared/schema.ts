@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, boolean, numeric } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, boolean, numeric, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -7,16 +7,162 @@ export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  email: text("email"),
+  phone: text("phone"),
+  address: text("address"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
+  email: true,
+  phone: true,
+  address: true,
+}).extend({
+  email: z.string().email().optional(),
+  phone: z.string().min(10).optional(),
+  address: z.string().optional(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
+export const categories = pgTable("categories", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull().unique(),
+  description: text("description"),
+  icon: text("icon"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertCategorySchema = createInsertSchema(categories).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  name: z.string().min(1),
+  description: z.string().optional(),
+  icon: z.string().optional(),
+});
+
+export type InsertCategory = z.infer<typeof insertCategorySchema>;
+export type Category = typeof categories.$inferSelect;
+
+export const products = pgTable("products", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  description: text("description"),
+  categoryId: varchar("category_id").notNull(),
+  price: numeric("price", { precision: 10, scale: 2 }).notNull(),
+  discountPrice: numeric("discount_price", { precision: 10, scale: 2 }),
+  stock: integer("stock").notNull().default(0),
+  image: text("image"),
+  rating: numeric("rating", { precision: 3, scale: 2 }).default("0"),
+  isOrganic: boolean("is_organic").default(false),
+  isFeatured: boolean("is_featured").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertProductSchema = createInsertSchema(products).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  name: z.string().min(1),
+  description: z.string().optional(),
+  categoryId: z.string().min(1),
+  price: z.number().positive(),
+  discountPrice: z.number().positive().optional(),
+  stock: z.number().min(0),
+  image: z.string().optional(),
+  rating: z.number().min(0).max(5).optional(),
+  isOrganic: z.boolean().optional(),
+  isFeatured: z.boolean().optional(),
+});
+
+export type InsertProduct = z.infer<typeof insertProductSchema>;
+export type Product = typeof products.$inferSelect;
+
+export const cartItems = pgTable("cart_items", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  productId: varchar("product_id").notNull(),
+  quantity: integer("quantity").notNull().default(1),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertCartItemSchema = createInsertSchema(cartItems).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  userId: z.string().min(1),
+  productId: z.string().min(1),
+  quantity: z.number().min(1),
+});
+
+export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
+export type CartItem = typeof cartItems.$inferSelect;
+
+export const orders = pgTable("orders", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  items: text("items").notNull(), // JSON stringified
+  subtotal: numeric("subtotal", { precision: 10, scale: 2 }).notNull(),
+  deliveryFee: numeric("delivery_fee", { precision: 10, scale: 2 }).notNull().default("0"),
+  tax: numeric("tax", { precision: 10, scale: 2 }).notNull().default("0"),
+  total: numeric("total", { precision: 10, scale: 2 }).notNull(),
+  status: text("status").notNull().default("pending"), // pending, confirmed, shipped, delivered, cancelled
+  deliveryAddress: text("delivery_address").notNull(),
+  phoneNumber: text("phone_number").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertOrderSchema = createInsertSchema(orders).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  userId: z.string().min(1),
+  items: z.string().min(1),
+  subtotal: z.number().positive(),
+  deliveryFee: z.number().min(0).optional(),
+  tax: z.number().min(0).optional(),
+  total: z.number().positive(),
+  status: z.enum(["pending", "confirmed", "shipped", "delivered", "cancelled"]),
+  deliveryAddress: z.string().min(5),
+  phoneNumber: z.string().min(10),
+  notes: z.string().optional(),
+});
+
+export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type Order = typeof orders.$inferSelect;
+
+export const reviews = pgTable("reviews", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  productId: varchar("product_id").notNull(),
+  userId: varchar("user_id").notNull(),
+  rating: integer("rating").notNull(),
+  comment: text("comment"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertReviewSchema = createInsertSchema(reviews).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  productId: z.string().min(1),
+  userId: z.string().min(1),
+  rating: z.number().min(1).max(5),
+  comment: z.string().optional(),
+});
+
+export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type Review = typeof reviews.$inferSelect;
+
+// Restaurant Schemas
 export const reservations = pgTable("reservations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
@@ -83,41 +229,32 @@ export const insertFoodOrderSchema = createInsertSchema(foodOrders).omit({
 }).extend({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number required"),
-  items: z.string().min(1, "At least one item required"),
+  items: z.string().min(1),
   deliveryType: z.enum(["pickup", "delivery"]),
   deliveryAddress: z.string().optional(),
-  subtotal: z.number().positive(),
+  subtotal: z.number().min(0),
   deliveryFee: z.number().min(0),
-  total: z.number().positive(),
-  status: z.enum(["pending", "confirmed", "preparing", "ready", "delivered", "cancelled"]).default("pending"),
+  total: z.number().min(0),
 });
 
 export type InsertFoodOrder = z.infer<typeof insertFoodOrderSchema>;
 export type FoodOrder = typeof foodOrders.$inferSelect;
 
-// Banking Models
+// Banking Schemas
 export const bankAccounts = pgTable("bank_accounts", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   email: text("email").notNull(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
-  accountType: text("account_type").notNull(), // checking, savings, money_market
   accountNumber: text("account_number").notNull().unique(),
-  balance: numeric("balance", { precision: 12, scale: 2 }).notNull().default("0.00"),
-  status: text("status").notNull().default("active"), // active, closed, suspended
+  accountType: text("account_type").notNull(),
+  balance: numeric("balance", { precision: 12, scale: 2 }).notNull().default("0"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertBankAccountSchema = createInsertSchema(bankAccounts).omit({
   id: true,
-  accountNumber: true,
-  balance: true,
-  status: true,
   createdAt: true,
 }).extend({
-  email: z.string().email("Invalid email address"),
-  firstName: z.string().min(2, "First name required"),
-  lastName: z.string().min(2, "Last name required"),
+  email: z.string().email(),
   accountType: z.enum(["checking", "savings", "money_market"]),
 });
 
@@ -127,21 +264,16 @@ export type BankAccount = typeof bankAccounts.$inferSelect;
 export const bankCards = pgTable("bank_cards", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   accountId: varchar("account_id").notNull(),
-  cardNumber: text("card_number").notNull().unique(),
+  cardNumber: text("card_number").notNull(),
   cardholderName: text("cardholder_name").notNull(),
   expiryDate: text("expiry_date").notNull(),
   cvv: text("cvv").notNull(),
-  cardType: text("card_type").notNull(), // debit, credit
-  status: text("status").notNull().default("active"),
+  cardType: text("card_type").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertBankCardSchema = createInsertSchema(bankCards).omit({
   id: true,
-  cardNumber: true,
-  cvv: true,
-  expiryDate: true,
-  status: true,
   createdAt: true,
 }).extend({
   accountId: z.string().min(1),
@@ -155,7 +287,7 @@ export type BankCard = typeof bankCards.$inferSelect;
 export const transactions = pgTable("transactions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   accountId: varchar("account_id").notNull(),
-  type: text("type").notNull(), // deposit, withdrawal, transfer, purchase
+  type: text("type").notNull(),
   amount: numeric("amount", { precision: 12, scale: 2 }).notNull(),
   description: text("description").notNull(),
   balanceAfter: numeric("balance_after", { precision: 12, scale: 2 }).notNull(),
@@ -178,6 +310,7 @@ export const insertTransactionSchema = createInsertSchema(transactions).omit({
 export type InsertTransaction = z.infer<typeof insertTransactionSchema>;
 export type Transaction = typeof transactions.$inferSelect;
 
+// Consultation Schemas
 export const consultations = pgTable("consultations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),

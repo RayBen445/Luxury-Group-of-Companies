@@ -1,17 +1,24 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema, insertUserSchema, insertConsultationSchema } from "@shared/schema";
+import {
+  insertUserSchema,
+  insertCategorySchema,
+  insertProductSchema,
+  insertCartItemSchema,
+  insertOrderSchema,
+  insertReviewSchema,
+} from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Authentication routes
+  // Authentication
   app.post("/api/auth/signup", async (req, res) => {
     try {
       const parsed = insertUserSchema.safeParse(req.body);
       if (!parsed.success) {
         console.error("Validation failed:", parsed.error.errors);
-        return res.status(400).json({ error: "Invalid credentials", details: parsed.error.errors });
+        return res.status(400).json({ error: "Invalid credentials" });
       }
       const existingUser = await storage.getUserByUsername(parsed.data.username);
       if (existingUser) {
@@ -19,11 +26,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const user = await storage.createUser(parsed.data);
       req.session!.userId = user.id;
-      res.json({ success: true });
+      res.json({ success: true, userId: user.id });
     } catch (error) {
       console.error("Error signing up:", error);
-      console.error("Stack trace:", error instanceof Error ? error.stack : "");
-      res.status(500).json({ error: "Failed to create account", message: error instanceof Error ? error.message : "Unknown error" });
+      res.status(500).json({ error: "Failed to create account" });
     }
   });
 
@@ -42,7 +48,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(401).json({ error: "Invalid credentials" });
       }
       req.session!.userId = user.id;
-      res.json({ success: true });
+      res.json({ success: true, userId: user.id });
     } catch (error) {
       console.error("Error logging in:", error);
       res.status(500).json({ error: "Failed to login" });
@@ -58,61 +64,186 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  app.post("/api/reservations", async (req, res) => {
+  app.get("/api/auth/me", async (req, res) => {
+    if (!req.session?.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    const user = await storage.getUser(req.session.userId);
+    res.json(user);
+  });
+
+  // Categories
+  app.post("/api/categories", async (req, res) => {
     try {
-      const parsed = insertReservationSchema.safeParse(req.body);
+      const parsed = insertCategorySchema.safeParse(req.body);
       if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid reservation data" });
+        return res.status(400).json({ error: "Invalid category data" });
       }
-      const reservation = await storage.createReservation(parsed.data);
-      res.json(reservation);
+      const category = await storage.createCategory(parsed.data);
+      res.json(category);
     } catch (error) {
-      console.error("Error creating reservation:", error);
-      res.status(500).json({ error: "Failed to create reservation" });
+      console.error("Error creating category:", error);
+      res.status(500).json({ error: "Failed to create category" });
     }
   });
 
-  app.get("/api/reservations", async (req, res) => {
+  app.get("/api/categories", async (req, res) => {
     try {
-      const reservations = await storage.getReservations();
-      res.json(reservations);
+      const categories = await storage.getCategories();
+      res.json(categories);
     } catch (error) {
-      console.error("Error fetching reservations:", error);
-      res.status(500).json({ error: "Failed to fetch reservations" });
+      console.error("Error fetching categories:", error);
+      res.status(500).json({ error: "Failed to fetch categories" });
     }
   });
 
-  app.post("/api/newsletter", async (req, res) => {
+  // Products
+  app.post("/api/products", async (req, res) => {
     try {
-      const parsed = insertNewsletterSchema.safeParse(req.body);
+      const parsed = insertProductSchema.safeParse(req.body);
       if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid email" });
+        return res.status(400).json({ error: "Invalid product data" });
       }
-      const newsletter = await storage.subscribeNewsletter(parsed.data);
-      res.json(newsletter);
+      const product = await storage.createProduct(parsed.data);
+      res.json(product);
     } catch (error) {
-      console.error("Error subscribing to newsletter:", error);
-      res.status(500).json({ error: "Failed to subscribe" });
+      console.error("Error creating product:", error);
+      res.status(500).json({ error: "Failed to create product" });
     }
   });
 
-  app.post("/api/food-orders", async (req, res) => {
+  app.get("/api/products", async (req, res) => {
     try {
-      const parsed = insertFoodOrderSchema.safeParse(req.body);
+      const products = await storage.getProducts();
+      res.json(products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      res.status(500).json({ error: "Failed to fetch products" });
+    }
+  });
+
+  app.get("/api/products/:id", async (req, res) => {
+    try {
+      const product = await storage.getProduct(req.params.id);
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      res.json(product);
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      res.status(500).json({ error: "Failed to fetch product" });
+    }
+  });
+
+  app.get("/api/products/category/:categoryId", async (req, res) => {
+    try {
+      const products = await storage.getProductsByCategory(req.params.categoryId);
+      res.json(products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      res.status(500).json({ error: "Failed to fetch products" });
+    }
+  });
+
+  app.get("/api/search", async (req, res) => {
+    try {
+      const query = req.query.q as string;
+      if (!query) {
+        return res.json([]);
+      }
+      const products = await storage.searchProducts(query);
+      res.json(products);
+    } catch (error) {
+      console.error("Error searching products:", error);
+      res.status(500).json({ error: "Failed to search products" });
+    }
+  });
+
+  // Cart
+  app.post("/api/cart", async (req, res) => {
+    if (!req.session?.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    try {
+      const parsed = insertCartItemSchema.safeParse({
+        ...req.body,
+        userId: req.session.userId,
+      });
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid cart item" });
+      }
+      const cartItem = await storage.addToCart(parsed.data);
+      res.json(cartItem);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      res.status(500).json({ error: "Failed to add to cart" });
+    }
+  });
+
+  app.get("/api/cart", async (req, res) => {
+    if (!req.session?.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    try {
+      const cart = await storage.getCart(req.session.userId);
+      res.json(cart);
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+      res.status(500).json({ error: "Failed to fetch cart" });
+    }
+  });
+
+  app.patch("/api/cart/:id", async (req, res) => {
+    try {
+      const cartItem = await storage.updateCartQuantity(req.params.id, req.body.quantity);
+      if (!cartItem) {
+        return res.status(404).json({ error: "Cart item not found" });
+      }
+      res.json(cartItem);
+    } catch (error) {
+      console.error("Error updating cart:", error);
+      res.status(500).json({ error: "Failed to update cart" });
+    }
+  });
+
+  app.delete("/api/cart/:id", async (req, res) => {
+    try {
+      await storage.removeFromCart(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error removing from cart:", error);
+      res.status(500).json({ error: "Failed to remove from cart" });
+    }
+  });
+
+  // Orders
+  app.post("/api/orders", async (req, res) => {
+    if (!req.session?.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    try {
+      const parsed = insertOrderSchema.safeParse({
+        ...req.body,
+        userId: req.session.userId,
+      });
       if (!parsed.success) {
         return res.status(400).json({ error: "Invalid order data" });
       }
-      const order = await storage.createFoodOrder(parsed.data);
+      const order = await storage.createOrder(parsed.data);
+      await storage.clearCart(req.session.userId);
       res.json(order);
     } catch (error) {
-      console.error("Error creating food order:", error);
+      console.error("Error creating order:", error);
       res.status(500).json({ error: "Failed to create order" });
     }
   });
 
-  app.get("/api/food-orders", async (req, res) => {
+  app.get("/api/orders", async (req, res) => {
+    if (!req.session?.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
     try {
-      const orders = await storage.getFoodOrders();
+      const orders = await storage.getUserOrders(req.session.userId);
       res.json(orders);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -120,102 +251,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Banking routes
-  app.post("/api/bank/accounts", async (req, res) => {
+  app.get("/api/orders/:id", async (req, res) => {
     try {
-      const parsed = insertBankAccountSchema.safeParse(req.body);
-      if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid account data", issues: parsed.error.issues });
+      const order = await storage.getOrder(req.params.id);
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
       }
-      const account = await storage.createBankAccount(parsed.data);
-      res.json(account);
+      res.json(order);
     } catch (error) {
-      console.error("Error creating bank account:", error);
-      res.status(500).json({ error: "Failed to create account" });
+      console.error("Error fetching order:", error);
+      res.status(500).json({ error: "Failed to fetch order" });
     }
   });
 
-  app.get("/api/bank/accounts/:email", async (req, res) => {
+  // Reviews
+  app.post("/api/reviews", async (req, res) => {
     try {
-      const accounts = await storage.getBankAccountsByEmail(req.params.email);
-      res.json(accounts);
-    } catch (error) {
-      console.error("Error fetching accounts:", error);
-      res.status(500).json({ error: "Failed to fetch accounts" });
-    }
-  });
-
-  app.get("/api/bank/accounts/:id/cards", async (req, res) => {
-    try {
-      const cards = await storage.getBankCardsByAccountId(req.params.id);
-      res.json(cards);
-    } catch (error) {
-      console.error("Error fetching cards:", error);
-      res.status(500).json({ error: "Failed to fetch cards" });
-    }
-  });
-
-  app.post("/api/bank/cards", async (req, res) => {
-    try {
-      const parsed = insertBankCardSchema.safeParse(req.body);
+      const parsed = insertReviewSchema.safeParse(req.body);
       if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid card data" });
+        return res.status(400).json({ error: "Invalid review data" });
       }
-      const card = await storage.createBankCard(parsed.data);
-      res.json(card);
+      const review = await storage.createReview(parsed.data);
+      res.json(review);
     } catch (error) {
-      console.error("Error creating bank card:", error);
-      res.status(500).json({ error: "Failed to create card" });
+      console.error("Error creating review:", error);
+      res.status(500).json({ error: "Failed to create review" });
     }
   });
 
-  app.get("/api/bank/transactions/:accountId", async (req, res) => {
+  app.get("/api/reviews/:productId", async (req, res) => {
     try {
-      const transactions = await storage.getTransactionsByAccountId(req.params.accountId);
-      res.json(transactions);
+      const reviews = await storage.getProductReviews(req.params.productId);
+      res.json(reviews);
     } catch (error) {
-      console.error("Error fetching transactions:", error);
-      res.status(500).json({ error: "Failed to fetch transactions" });
-    }
-  });
-
-  app.post("/api/bank/transactions", async (req, res) => {
-    try {
-      const parsed = insertTransactionSchema.safeParse(req.body);
-      if (!parsed.success) {
-        return res.status(400).json({ error: "Invalid transaction data" });
-      }
-      const transaction = await storage.createTransaction(parsed.data);
-      res.json(transaction);
-    } catch (error) {
-      console.error("Error creating transaction:", error);
-      res.status(500).json({ error: "Failed to create transaction" });
-    }
-  });
-
-  // Consultation endpoints
-  app.post("/api/consultations", async (req, res) => {
-    try {
-      const parsed = insertConsultationSchema.safeParse(req.body);
-      if (!parsed.success) {
-        console.error("Consultation validation failed:", parsed.error.errors);
-        return res.status(400).json({ error: "Invalid consultation data", details: parsed.error.errors });
-      }
-      const consultation = await storage.createConsultation(parsed.data);
-      res.json(consultation);
-    } catch (error) {
-      console.error("Error scheduling consultation:", error);
-      res.status(500).json({ error: "Failed to schedule consultation" });
-    }
-  });
-
-  app.get("/api/consultations", async (req, res) => {
-    try {
-      const consultations = await storage.getConsultations();
-      res.json(consultations);
-    } catch (error) {
-      console.error("Error fetching consultations:", error);
-      res.status(500).json({ error: "Failed to fetch consultations" });
+      console.error("Error fetching reviews:", error);
+      res.status(500).json({ error: "Failed to fetch reviews" });
     }
   });
 
@@ -224,6 +294,5 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
-
   return httpServer;
 }

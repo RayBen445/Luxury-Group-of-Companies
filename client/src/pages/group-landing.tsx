@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart } from "lucide-react";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -115,6 +115,16 @@ export default function GroupLandingPage() {
       features: ["50+ Aircraft", "Global Coverage", "Gourmet Catering", "24/7 Booking"],
       href: "/airline",
       color: "from-sky-500/20 to-transparent"
+    },
+    {
+      id: "supermarket",
+      name: "Royale Luxury Supermarket",
+      type: "Premium Retail & Grocery",
+      icon: ShoppingCart,
+      description: "World-class supermarket offering premium products, organic selections, and fresh produce with express delivery service",
+      features: ["10+ Categories", "Organic Selection", "Express Delivery", "Premium Quality"],
+      href: "/supermarket",
+      color: "from-green-500/20 to-transparent"
     }
   ];
 
