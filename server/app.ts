@@ -6,6 +6,8 @@ import express, {
   Response,
   NextFunction,
 } from "express";
+import session from "express-session";
+import MemoryStore from "memorystore";
 
 import { registerRoutes } from "./routes";
 
@@ -33,6 +35,22 @@ app.use(express.json({
   }
 }));
 app.use(express.urlencoded({ extended: false }));
+
+// Initialize session middleware
+const SessionStore = MemoryStore(session);
+const sessionStore = new SessionStore();
+app.use(session({
+  store: sessionStore,
+  secret: process.env.SESSION_SECRET || "dev-secret-key",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax"
+  }
+}));
 
 app.use((req, res, next) => {
   const start = Date.now();
