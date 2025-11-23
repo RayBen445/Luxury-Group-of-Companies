@@ -17,6 +17,7 @@ export default function AboutGroupPage() {
     { name: "Hospital", href: "/hospital", icon: "🏥" },
     { name: "Yacht Club", href: "/yacht-club", icon: "⛵" },
     { name: "Airline", href: "/airline", icon: "✈️" },
+    { name: "Spa & Wellness", href: "/spa-wellness", icon: "🧘" },
   ];
 
   return (
@@ -36,7 +37,7 @@ export default function AboutGroupPage() {
               Royale Luxury Group
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto" data-testid="text-tagline">
-              Where Elegance Meets Excellence across 11 premium properties
+              Where Elegance Meets Excellence across 12 premium properties
             </p>
           </div>
 
@@ -99,7 +100,7 @@ export default function AboutGroupPage() {
           </div>
 
           <div className="mb-16">
-            <h2 className="font-serif text-4xl font-bold mb-8 text-center" data-testid="text-properties">Our 11 Premium Properties</h2>
+            <h2 className="font-serif text-4xl font-bold mb-8 text-center" data-testid="text-properties">Our 12 Premium Properties</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {properties.map((prop) => (
                 <Link key={prop.name} href={prop.href}>

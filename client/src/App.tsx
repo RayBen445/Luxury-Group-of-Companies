@@ -40,6 +40,7 @@ import UniversityPage from "@/pages/university";
 import HospitalPage from "@/pages/hospital";
 import YachtClubPage from "@/pages/yacht-club";
 import AirlinePage from "@/pages/airline";
+import SpaWellnessPage from "@/pages/spa-wellness";
 import LoginPage from "@/pages/auth-login";
 import SignupPage from "@/pages/auth-signup";
 import AboutGroupPage from "@/pages/about-group";
@@ -54,10 +55,11 @@ import UniversityPoliciesPage from "@/pages/policies/university-policies";
 import HospitalPoliciesPage from "@/pages/policies/hospital-policies";
 import YachtClubPoliciesPage from "@/pages/policies/yacht-club-policies";
 import AirlinePoliciesPage from "@/pages/policies/airline-policies";
+import SpaWellnessPoliciesPage from "@/pages/policies/spa-wellness-policies";
 
 function Router() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline") || location.startsWith("/spa-wellness");
 
   return (
     <Switch>
@@ -77,6 +79,7 @@ function Router() {
       <Route path="/hospital" component={HospitalPage} />
       <Route path="/yacht-club" component={YachtClubPage} />
       <Route path="/airline" component={AirlinePage} />
+      <Route path="/spa-wellness" component={SpaWellnessPage} />
       
       {/* Authentication Routes */}
       <Route path="/auth/login" component={LoginPage} />
@@ -95,6 +98,7 @@ function Router() {
       <Route path="/hospital/policies" component={HospitalPoliciesPage} />
       <Route path="/yacht-club/policies" component={YachtClubPoliciesPage} />
       <Route path="/airline/policies" component={AirlinePoliciesPage} />
+      <Route path="/spa-wellness/policies" component={SpaWellnessPoliciesPage} />
       
       {/* Restaurant Routes */}
       <Route path="/restaurant" component={HomePage} />
@@ -134,7 +138,7 @@ function Router() {
 
 function NavigationWrapper() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline") || location.startsWith("/spa-wellness");
 
   return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }
