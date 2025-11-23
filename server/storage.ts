@@ -1,4 +1,20 @@
-import { type User, type InsertUser, type Reservation, type InsertReservation, type Newsletter, type InsertNewsletter, type FoodOrder, type InsertFoodOrder, type BankAccount, type InsertBankAccount, type BankCard, type InsertBankCard, type Transaction, type InsertTransaction } from "@shared/schema";
+import { 
+  type User, 
+  type InsertUser, 
+  type Reservation, 
+  type InsertReservation, 
+  type Newsletter, 
+  type InsertNewsletter, 
+  type FoodOrder, 
+  type InsertFoodOrder, 
+  type BankAccount, 
+  type InsertBankAccount, 
+  type BankCard, 
+  type InsertBankCard, 
+  type Transaction, 
+  type InsertTransaction 
+} from "@shared/schema";
+
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -11,7 +27,6 @@ export interface IStorage {
   getNewsletterSubscribers(): Promise<Newsletter[]>;
   createFoodOrder(order: InsertFoodOrder): Promise<FoodOrder>;
   getFoodOrders(): Promise<FoodOrder[]>;
-  // Banking methods
   createBankAccount(account: InsertBankAccount): Promise<BankAccount>;
   getBankAccountsByEmail(email: string): Promise<BankAccount[]>;
   getBankAccount(id: string): Promise<BankAccount | undefined>;
@@ -23,32 +38,25 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-  private reservations: Map<string, Reservation>;
-  private newsletters: Map<string, Newsletter>;
-  private foodOrders: Map<string, FoodOrder>;
-  private bankAccounts: Map<string, BankAccount>;
-  private bankCards: Map<string, BankCard>;
-  private transactions: Map<string, Transaction>;
+  private users = new Map<string, User>();
+  private reservations = new Map<string, Reservation>();
+  private newsletters = new Map<string, Newsletter>();
+  private foodOrders = new Map<string, FoodOrder>();
+  private bankAccounts = new Map<string, BankAccount>();
+  private bankCards = new Map<string, BankCard>();
+  private transactions = new Map<string, Transaction>();
 
-  constructor() {
-    this.users = new Map();
-    this.reservations = new Map();
-    this.newsletters = new Map();
-    this.foodOrders = new Map();
-    this.bankAccounts = new Map();
-    this.bankCards = new Map();
-    this.transactions = new Map();
+  /** Normalize undefined → null for schema compatibility */
+  private normalize<T>(v: T | null | undefined): T | null {
+    return v ?? null;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
+  async getUser(id: string) {
     return this.users.get(id);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getUserByUsername(username: string) {
+    return Array.from(this.users.values()).find(u => u.username === username);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
@@ -58,135 +66,135 @@ export class MemStorage implements IStorage {
     return user;
   }
 
-  async createReservation(insertReservation: InsertReservation): Promise<Reservation> {
+  async createReservation(data: InsertReservation): Promise<Reservation> {
     const id = randomUUID();
     const reservation: Reservation = {
-      ...insertReservation,
+      ...data,
       id,
-      specialRequests: insertReservation.specialRequests ?? null,
       createdAt: new Date(),
+      specialRequests: this.normalize(data.specialRequests)
     };
     this.reservations.set(id, reservation);
     return reservation;
   }
 
-  async getReservations(): Promise<Reservation[]> {
+  async getReservations() {
     return Array.from(this.reservations.values());
   }
 
-  async subscribeNewsletter(insertNewsletter: InsertNewsletter): Promise<Newsletter> {
+  async subscribeNewsletter(data: InsertNewsletter): Promise<Newsletter> {
     const id = randomUUID();
     const newsletter: Newsletter = {
-      ...insertNewsletter,
+      ...data,
       id,
-      subscribedAt: new Date(),
+      subscribedAt: new Date()
     };
     this.newsletters.set(id, newsletter);
     return newsletter;
   }
 
-  async getNewsletterSubscribers(): Promise<Newsletter[]> {
+  async getNewsletterSubscribers() {
     return Array.from(this.newsletters.values());
   }
 
-  async createFoodOrder(insertOrder: InsertFoodOrder): Promise<FoodOrder> {
+  async createFoodOrder(data: InsertFoodOrder): Promise<FoodOrder> {
     const id = randomUUID();
     const order: FoodOrder = {
-      ...insertOrder,
+      ...data,
       id,
-      deliveryAddress: insertOrder.deliveryAddress ?? null,
       createdAt: new Date(),
+      deliveryAddress: this.normalize(data.deliveryAddress)
     };
     this.foodOrders.set(id, order);
     return order;
   }
 
-  async getFoodOrders(): Promise<FoodOrder[]> {
+  async getFoodOrders() {
     return Array.from(this.foodOrders.values());
   }
 
-  async createBankAccount(insertAccount: InsertBankAccount): Promise<BankAccount> {
+  async createBankAccount(data: InsertBankAccount): Promise<BankAccount> {
     const id = randomUUID();
-    const accountNumber = this.generateAccountNumber();
     const account: BankAccount = {
-      ...insertAccount,
+      ...data,
       id,
-      accountNumber,
+      accountNumber: this.generateAccountNumber(),
       balance: "0.00",
       status: "active",
-      createdAt: new Date(),
+      createdAt: new Date()
     };
     this.bankAccounts.set(id, account);
     return account;
   }
 
-  async getBankAccountsByEmail(email: string): Promise<BankAccount[]> {
-    return Array.from(this.bankAccounts.values()).filter(
-      (account) => account.email === email
-    );
+  async getBankAccountsByEmail(email: string) {
+    return Array.from(this.bankAccounts.values()).filter(a => a.email === email);
   }
 
-  async getBankAccount(id: string): Promise<BankAccount | undefined> {
+  async getBankAccount(id: string) {
     return this.bankAccounts.get(id);
   }
 
-  async updateBankAccountBalance(id: string, balance: number): Promise<BankAccount | undefined> {
+  async updateBankAccountBalance(id: string, balance: number) {
     const account = this.bankAccounts.get(id);
     if (!account) return undefined;
-    const updated = { ...account, balance: balance.toString() };
+
+    const updated: BankAccount = {
+      ...account,
+      balance: balance.toFixed(2)
+    };
+
     this.bankAccounts.set(id, updated);
     return updated;
   }
 
-  async createBankCard(insertCard: InsertBankCard): Promise<BankCard> {
+  async createBankCard(data: InsertBankCard): Promise<BankCard> {
     const id = randomUUID();
-    const cardNumber = this.generateCardNumber();
-    const cvv = this.generateCVV();
-    const expiryDate = this.generateExpiryDate();
-    
     const card: BankCard = {
-      ...insertCard,
+      ...data,
       id,
-      cardNumber,
-      cvv,
-      expiryDate,
       status: "active",
-      createdAt: new Date(),
+      cardNumber: this.generateCardNumber(),
+      cvv: this.generateCVV(),
+      expiryDate: this.generateExpiryDate(),
+      createdAt: new Date()
     };
     this.bankCards.set(id, card);
     return card;
   }
 
-  async getBankCardsByAccountId(accountId: string): Promise<BankCard[]> {
-    return Array.from(this.bankCards.values()).filter(
-      (card) => card.accountId === accountId
-    );
+  async getBankCardsByAccountId(accountId: string) {
+    return Array.from(this.bankCards.values()).filter(c => c.accountId === accountId);
   }
 
-  async createTransaction(insertTransaction: InsertTransaction): Promise<Transaction> {
+  async createTransaction(data: InsertTransaction): Promise<Transaction> {
     const id = randomUUID();
-    const account = await this.getBankAccount(insertTransaction.accountId);
-    const balanceAfter = account ? (parseFloat(account.balance) + parseFloat(insertTransaction.amount.toString())).toFixed(2) : "0.00";
-    
+    const account = await this.getBankAccount(data.accountId);
+
+    const amount = parseFloat(data.amount.toString());
+    const previous = account ? parseFloat(account.balance) : 0;
+    const newBalance = (previous + amount).toFixed(2);
+
     if (account) {
-      await this.updateBankAccountBalance(insertTransaction.accountId, parseFloat(balanceAfter));
+      await this.updateBankAccountBalance(data.accountId, parseFloat(newBalance));
     }
 
     const transaction: Transaction = {
-      ...insertTransaction,
+      ...data,
       id,
-      amount: insertTransaction.amount.toString(),
-      balanceAfter,
+      amount: amount.toFixed(2),
+      balanceAfter: newBalance,
       status: "completed",
-      createdAt: new Date(),
+      createdAt: new Date()
     };
+
     this.transactions.set(id, transaction);
     return transaction;
   }
 
-  async getTransactionsByAccountId(accountId: string): Promise<Transaction[]> {
+  async getTransactionsByAccountId(accountId: string) {
     return Array.from(this.transactions.values())
-      .filter((txn) => txn.accountId === accountId)
+      .filter(txn => txn.accountId === accountId)
       .sort((a, b) => {
         const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
@@ -194,26 +202,25 @@ export class MemStorage implements IStorage {
       });
   }
 
-  private generateAccountNumber(): string {
+  private generateAccountNumber() {
     return `LB${Math.random().toString().slice(2, 11).padStart(9, "0")}`;
   }
 
-  private generateCardNumber(): string {
-    const prefix = "4532"; // Visa-like
-    const random = Math.random().toString().slice(2, 14).padStart(12, "0");
-    return prefix + random;
+  private generateCardNumber() {
+    return "4532" + Math.random().toString().slice(2, 14).padStart(12, "0");
   }
 
-  private generateCVV(): string {
+  private generateCVV() {
     return Math.random().toString().slice(2, 5).padStart(3, "0");
   }
 
-  private generateExpiryDate(): string {
+  private generateExpiryDate() {
     const now = new Date();
-    const year = (now.getFullYear() + 5) % 100; // 5 years validity
-    const month = (now.getMonth() + 1).toString().padStart(2, "0");
+    const year = (now.getFullYear() + 5) % 100;
+    const month = String(now.getMonth() + 1).padStart(2, "0");
     return `${month}/${year}`;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new MemStorage();  
+
