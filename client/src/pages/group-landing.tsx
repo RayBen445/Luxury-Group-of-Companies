@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star, Zap, CreditCard } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2 } from "lucide-react";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -65,6 +65,16 @@ export default function GroupLandingPage() {
       features: ["Wealth Management", "Investment Services", "Corporate Banking", "Premium Cards"],
       href: "/bank",
       color: "from-green-500/20 to-transparent"
+    },
+    {
+      id: "construction",
+      name: "Royale Construction",
+      type: "Luxury Development Company",
+      icon: Building2,
+      description: "Premium construction and real estate development creating iconic structures and luxury residences",
+      features: ["Luxury Developments", "Custom Construction", "Architectural Design", "Project Management"],
+      href: "/construction",
+      color: "from-orange-500/20 to-transparent"
     }
   ];
 
@@ -144,9 +154,9 @@ export default function GroupLandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                number: "5",
+                number: "6",
                 label: "World-Class Properties",
-                desc: "Luxury hospitality and technology solutions"
+                desc: "Luxury hospitality, technology, banking, and construction solutions"
               },
               {
                 number: "2000+",

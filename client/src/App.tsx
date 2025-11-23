@@ -33,6 +33,7 @@ import TechPage from "@/pages/tech";
 import BankPage from "@/pages/bank";
 import BankOpenAccountPage from "@/pages/bank-open-account";
 import BankDashboardPage from "@/pages/bank-dashboard";
+import ConstructionPage from "@/pages/construction";
 
 function Router() {
   const [location] = useLocation();
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/bank" component={BankPage} />
       <Route path="/bank/open-account" component={BankOpenAccountPage} />
       <Route path="/bank/dashboard" component={BankDashboardPage} />
+      <Route path="/construction" component={ConstructionPage} />
       
       {/* Restaurant Routes */}
       <Route path="/restaurant" component={HomePage} />
@@ -90,14 +92,14 @@ function Router() {
 
 function NavigationWrapper() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction");
 
   return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }
 
 function ConditionalRestaurantComponents() {
   const [location] = useLocation();
-  const isRestaurantRoute = location.startsWith("/restaurant") || location.startsWith("/menu") || location.startsWith("/food-ordering") || location.startsWith("/reservations") || location.startsWith("/chefs") || location.startsWith("/gallery") || location.startsWith("/about") || location.startsWith("/contact") || location.startsWith("/policies") || location.startsWith("/privacy-policy") || location.startsWith("/terms-of-service") || location.startsWith("/cancellation-policy") || location.startsWith("/loyalty") || location.startsWith("/settings");
+  const isRestaurantRoute = location.startsWith("/restaurant") || location.startsWith("/menu") || location.startsWith("/food-ordering") || location.startsWith("/reservations") || location.startsWith("/chefs") || location.startsWith("/gallery") || location.startsWith("/about") || location.startsWith("/contact") || location.startsWith("/policies") || location.startsWith("/privacy-policy") || location.startsWith("/terms-of-service") || location.startsWith("/cancellation-policy") || location.startsWith("/loyalty") || location.startsWith("/settings") || location === "/";
 
   if (!isRestaurantRoute) {
     return null;

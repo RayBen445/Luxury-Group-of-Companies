@@ -79,6 +79,13 @@ export function GroupFooter() {
                   </Button>
                 </Link>
               </li>
+              <li>
+                <Link href="/construction">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-construction">
+                    Construction
+                  </Button>
+                </Link>
+              </li>
             </ul>
           </div>
 
