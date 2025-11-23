@@ -1,9 +1,61 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema } from "@shared/schema";
+import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema, insertUserSchema } from "@shared/schema";
+import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Authentication routes
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const parsed = insertUserSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid credentials" });
+      }
+      const existingUser = await storage.getUserByUsername(parsed.data.username);
+      if (existingUser) {
+        return res.status(409).json({ error: "Username already exists" });
+      }
+      const user = await storage.createUser(parsed.data);
+      req.session.userId = user.id;
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error signing up:", error);
+      res.status(500).json({ error: "Failed to create account" });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const schema = z.object({
+        username: z.string(),
+        password: z.string(),
+      });
+      const parsed = schema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid credentials" });
+      }
+      const user = await storage.verifyUserPassword(parsed.data.username, parsed.data.password);
+      if (!user) {
+        return res.status(401).json({ error: "Invalid credentials" });
+      }
+      req.session.userId = user.id;
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error logging in:", error);
+      res.status(500).json({ error: "Failed to login" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ error: "Failed to logout" });
+      }
+      res.json({ success: true });
+    });
+  });
+
   app.post("/api/reservations", async (req, res) => {
     try {
       const parsed = insertReservationSchema.safeParse(req.body);

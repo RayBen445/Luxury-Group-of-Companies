@@ -40,6 +40,20 @@ import UniversityPage from "@/pages/university";
 import HospitalPage from "@/pages/hospital";
 import YachtClubPage from "@/pages/yacht-club";
 import AirlinePage from "@/pages/airline";
+import LoginPage from "@/pages/auth-login";
+import SignupPage from "@/pages/auth-signup";
+import AboutGroupPage from "@/pages/about-group";
+import RestaurantPoliciesPage from "@/pages/policies/restaurant-policies";
+import HotelPoliciesPage from "@/pages/policies/hotel-policies";
+import BankPoliciesPage from "@/pages/policies/bank-policies";
+import ClubPoliciesPage from "@/pages/policies/club-policies";
+import TechPoliciesPage from "@/pages/policies/tech-policies";
+import LoungePoliciesPage from "@/pages/policies/lounge-policies";
+import ConstructionPoliciesPage from "@/pages/policies/construction-policies";
+import UniversityPoliciesPage from "@/pages/policies/university-policies";
+import HospitalPoliciesPage from "@/pages/policies/hospital-policies";
+import YachtClubPoliciesPage from "@/pages/policies/yacht-club-policies";
+import AirlinePoliciesPage from "@/pages/policies/airline-policies";
 
 function Router() {
   const [location] = useLocation();
@@ -63,6 +77,24 @@ function Router() {
       <Route path="/hospital" component={HospitalPage} />
       <Route path="/yacht-club" component={YachtClubPage} />
       <Route path="/airline" component={AirlinePage} />
+      
+      {/* Authentication Routes */}
+      <Route path="/auth/login" component={LoginPage} />
+      <Route path="/auth/signup" component={SignupPage} />
+      <Route path="/about-group" component={AboutGroupPage} />
+
+      {/* Policy Routes */}
+      <Route path="/restaurant/policies" component={RestaurantPoliciesPage} />
+      <Route path="/hotel/policies" component={HotelPoliciesPage} />
+      <Route path="/bank/policies" component={BankPoliciesPage} />
+      <Route path="/club/policies" component={ClubPoliciesPage} />
+      <Route path="/tech/policies" component={TechPoliciesPage} />
+      <Route path="/lounge/policies" component={LoungePoliciesPage} />
+      <Route path="/construction/policies" component={ConstructionPoliciesPage} />
+      <Route path="/university/policies" component={UniversityPoliciesPage} />
+      <Route path="/hospital/policies" component={HospitalPoliciesPage} />
+      <Route path="/yacht-club/policies" component={YachtClubPoliciesPage} />
+      <Route path="/airline/policies" component={AirlinePoliciesPage} />
       
       {/* Restaurant Routes */}
       <Route path="/restaurant" component={HomePage} />

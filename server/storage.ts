@@ -16,11 +16,13 @@ import {
 } from "@shared/schema";
 
 import { randomUUID } from "crypto";
+import bcryptjs from "bcryptjs";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  verifyUserPassword(username: string, password: string): Promise<User | null>;
   createReservation(reservation: InsertReservation): Promise<Reservation>;
   getReservations(): Promise<Reservation[]>;
   subscribeNewsletter(newsletter: InsertNewsletter): Promise<Newsletter>;
@@ -61,9 +63,17 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    const hashedPassword = await bcryptjs.hash(insertUser.password, 10);
+    const user: User = { ...insertUser, id, password: hashedPassword };
     this.users.set(id, user);
     return user;
+  }
+
+  async verifyUserPassword(username: string, password: string): Promise<User | null> {
+    const user = await this.getUserByUsername(username);
+    if (!user) return null;
+    const isValid = await bcryptjs.compare(password, user.password);
+    return isValid ? user : null;
   }
 
   async createReservation(data: InsertReservation): Promise<Reservation> {

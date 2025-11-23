@@ -128,9 +128,11 @@ export function GroupFooter() {
                 </Link>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-learn-more">
-                  Learn More
-                </Button>
+                <Link href="/about-group">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-learn-more">
+                    Learn More
+                  </Button>
+                </Link>
               </li>
               <li>
                 <Link href="/privacy-policy">
