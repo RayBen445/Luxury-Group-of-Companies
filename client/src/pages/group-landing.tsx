@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart, Car } from "lucide-react";
+import restaurantImage from "@assets/generated_images/luxury_restaurant_exterior_-_la_tavola_royale.png";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -141,14 +142,22 @@ export default function GroupLandingPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto max-w-6xl">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-[600px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={restaurantImage} 
+            alt="La Tavola Royale - Main Company Headquarters" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-16">
-            <Badge className="mb-6">Luxury Hospitality Group</Badge>
-            <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6 gradient-text">
+            <Badge className="mb-6 backdrop-blur-sm">Luxury Hospitality Group</Badge>
+            <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6 text-white drop-shadow-lg">
               Experience Luxury
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 drop-shadow-md">
               Discover our curated collection of premium establishments, each designed to deliver exceptional experiences in fine dining, hospitality, and entertainment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -158,13 +167,18 @@ export default function GroupLandingPage() {
                 </Button>
               </Link>
               <Link href="/hotel">
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm">
                   Book Hotel
                 </Button>
               </Link>
             </div>
           </div>
+        </div>
+      </section>
 
+      {/* Properties Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-6xl">
           {/* Properties Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {properties.map((property) => {

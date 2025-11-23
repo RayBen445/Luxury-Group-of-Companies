@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Search, Truck, Shield, Heart, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import supermarketImage from "@assets/generated_images/premium_supermarket_storefront.png";
 
 type Product = any;
 type Category = any;
@@ -51,8 +52,16 @@ export default function SupermarketPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="container mx-auto max-w-6xl text-center">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-[500px] flex items-center justify-center overflow-hidden bg-gradient-to-r from-primary/10 to-accent/10">
+        <div className="absolute inset-0 z-0 opacity-40">
+          <img 
+            src={supermarketImage} 
+            alt="Premium Supermarket" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="container mx-auto max-w-6xl text-center relative z-10">
           <Badge className="mb-4" data-testid="badge-supermarket">
             Royale Luxury Collection
           </Badge>

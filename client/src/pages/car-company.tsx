@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Car, TrendingUp, Zap, Users, MapPin, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import showroomImage from "@assets/generated_images/luxury_car_dealership_showroom.png";
+import vehiclesImage from "@assets/generated_images/multiple_luxury_vehicles_display.png";
 
 type Vehicle = any;
 
@@ -57,8 +59,16 @@ export default function CarCompanyPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="container mx-auto max-w-6xl text-center">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-[500px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={showroomImage} 
+            alt="Luxury Car Dealership Showroom" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="container mx-auto max-w-6xl text-center relative z-10">
           <Badge className="mb-4" data-testid="badge-car-company">
             Royale Luxury Collection
           </Badge>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Zap, Users, Gauge } from "lucide-react";
+import vehicleShowroomImage from "@assets/generated_images/luxury_vehicle_in_showroom.png";
 
 type Vehicle = any;
 
@@ -36,9 +37,12 @@ export default function CarCompanyVehiclePage() {
           {/* Vehicle Image */}
           <Card className="hover-elevate" data-testid="card-image">
             <CardContent className="p-8">
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center text-8xl" data-testid="img-vehicle">
-                🏎️
-              </div>
+              <img 
+                src={vehicleShowroomImage}
+                alt={vehicle.name}
+                className="w-full h-full object-cover rounded-lg"
+                data-testid="img-vehicle"
+              />
               <p className="text-center text-sm text-muted-foreground mt-4" data-testid="text-image-note">
                 Official vehicle imagery
               </p>
