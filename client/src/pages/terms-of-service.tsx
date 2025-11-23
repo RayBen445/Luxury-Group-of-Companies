@@ -11,7 +11,7 @@ export default function TermsOfServicePage() {
             Terms of Service
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-terms-intro">
-            Please read these terms carefully before using our website and services. By accessing or using La Tavola Royale, you agree to be bound by these terms.
+            Please read these terms carefully before using our website and services. By accessing or using Royale Luxury Group services and properties, you agree to be bound by these terms.
           </p>
           <p className="text-sm text-muted-foreground mt-4" data-testid="text-last-updated">
             Effective Date: November 2024
@@ -26,7 +26,7 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-1-title">1. Acceptance of Terms</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-1">
                 <p>
-                  By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                  By accessing and using this website or any Royale Luxury Group services and properties, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service or visit our properties.
                 </p>
               </div>
             </CardContent>
@@ -37,7 +37,7 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-2-title">2. Use License</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-2">
                 <p>
-                  Permission is granted to temporarily download one copy of the materials (information or software) on La Tavola Royale's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                  Permission is granted to temporarily download one copy of the materials (information or software) on Royale Luxury Group's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
                 </p>
                 <ul className="list-disc list-inside space-y-2">
                   <li>Modifying or copying the materials</li>
@@ -56,10 +56,10 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-3-title">3. Disclaimer</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-3">
                 <p>
-                  The materials on La Tavola Royale's website are provided on an 'as is' basis. La Tavola Royale makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                  The materials on Royale Luxury Group's website are provided on an 'as is' basis. Royale Luxury Group makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
                 </p>
                 <p>
-                  We do not warrant that the contents of our website will be uninterrupted or error-free. We do not warrant that the website, its server, or emails sent from us are free of viruses or other harmful components.
+                  We do not warrant that the contents of our website will be uninterrupted or error-free. We do not warrant that the website, its server, or emails sent from us are free of viruses or other harmful components. We operate multiple premium properties and services which maintain their own operational standards.
                 </p>
               </div>
             </CardContent>
@@ -70,7 +70,7 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-4-title">4. Limitations of Liability</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-4">
                 <p>
-                  In no event shall La Tavola Royale or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on La Tavola Royale's website, even if La Tavola Royale or an authorized representative has been notified orally or in writing of the possibility of such damage.
+                  In no event shall Royale Luxury Group or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our website or services, even if Royale Luxury Group or an authorized representative has been notified orally or in writing of the possibility of such damage.
                 </p>
               </div>
             </CardContent>
@@ -81,10 +81,10 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-5-title">5. Accuracy of Materials</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-5">
                 <p>
-                  The materials appearing on La Tavola Royale's website could include technical, typographical, or photographic errors. La Tavola Royale does not warrant that any of the materials on its website are accurate, complete, or current. La Tavola Royale may make changes to the materials contained on its website at any time without notice.
+                  The materials appearing on Royale Luxury Group's website could include technical, typographical, or photographic errors. Royale Luxury Group does not warrant that any of the materials on its website are accurate, complete, or current. Royale Luxury Group may make changes to the materials contained on its website at any time without notice.
                 </p>
                 <p>
-                  Menu items, prices, and availability are subject to change without notice. We strive to provide accurate information but cannot guarantee real-time accuracy at all times.
+                  Services, menu items, prices, availability, offerings, and property information are subject to change without notice. We strive to provide accurate information but cannot guarantee real-time accuracy at all times across all our properties.
                 </p>
               </div>
             </CardContent>
@@ -95,10 +95,10 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-6-title">6. Materials and Content</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-6">
                 <p>
-                  La Tavola Royale has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by La Tavola Royale of the site. Use of any such linked website is at the user's own risk.
+                  Royale Luxury Group has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by Royale Luxury Group of the site. Use of any such linked website is at the user's own risk.
                 </p>
                 <p>
-                  Any content or images you upload or submit to our website remain your property, but you grant La Tavola Royale a perpetual, worldwide license to use, reproduce, modify, and display such content on our website.
+                  Any content or images you upload or submit to our website remain your property, but you grant Royale Luxury Group a perpetual, worldwide license to use, reproduce, modify, and display such content on our website and property channels.
                 </p>
               </div>
             </CardContent>
@@ -109,7 +109,7 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-7-title">7. Modifications</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-7">
                 <p>
-                  La Tavola Royale may revise these terms of service for its website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.
+                  Royale Luxury Group may revise these terms of service for its website and properties at any time without notice. By using this website or our services, you are agreeing to be bound by the then current version of these terms of service.
                 </p>
               </div>
             </CardContent>
@@ -120,7 +120,7 @@ export default function TermsOfServicePage() {
               <h2 className="font-serif text-3xl font-bold mb-4" data-testid="text-section-8-title">8. Governing Law</h2>
               <div className="space-y-3 text-muted-foreground" data-testid="content-section-8">
                 <p>
-                  These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which La Tavola Royale operates, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.
+                  These terms and conditions are governed by and construed in accordance with the laws of Nigeria, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.
                 </p>
               </div>
             </CardContent>

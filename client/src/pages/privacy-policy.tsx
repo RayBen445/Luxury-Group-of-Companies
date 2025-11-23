@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-privacy-intro">
-            Your privacy is important to us. This policy explains how La Tavola Royale collects, uses, and protects your personal information.
+            Your privacy is important to us. This policy explains how Royale Luxury Group collects, uses, and protects your personal information across all our premium properties and services.
           </p>
           <p className="text-sm text-muted-foreground mt-4" data-testid="text-last-updated">
             Last Updated: November 2024
@@ -84,7 +84,7 @@ export default function PrivacyPolicyPage() {
                   <strong>Legal Requirements:</strong> We may disclose your information if required by law enforcement, court orders, or to protect our legal rights.
                 </p>
                 <p>
-                  <strong>Business Transfers:</strong> If La Tavola Royale is involved in a merger, acquisition, or asset sale, your information may be transferred as part of that transaction.
+                  <strong>Business Transfers:</strong> If Royale Luxury Group is involved in a merger, acquisition, or asset sale, your information may be transferred as part of that transaction.
                 </p>
                 <p>
                   <strong>Your Consent:</strong> We only share information with third parties when you explicitly consent or as described in this policy.
@@ -150,7 +150,7 @@ export default function PrivacyPolicyPage() {
                   <strong>Data Portability:</strong> You can request your data in a portable format.
                 </p>
                 <p>
-                  To exercise these rights, contact us at latavoroyale@gmail.com with your request.
+                  To exercise these rights, contact us at support@royaleluxurygroup.com or call +234 807 561 4248 with your request.
                 </p>
               </div>
             </CardContent>
