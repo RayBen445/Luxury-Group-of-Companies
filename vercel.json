@@ -1,9 +1,10 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite",
-  "regions": ["iad1"],
-  "git": {
-    "deploymentEnabled": true
-  }
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.js"
+    }
+  ]
 }
