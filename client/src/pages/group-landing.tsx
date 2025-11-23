@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2 } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor } from "lucide-react";
 
 export default function GroupLandingPage() {
   const properties = [
@@ -75,6 +75,36 @@ export default function GroupLandingPage() {
       features: ["Luxury Developments", "Custom Construction", "Architectural Design", "Project Management"],
       href: "/construction",
       color: "from-orange-500/20 to-transparent"
+    },
+    {
+      id: "university",
+      name: "Royale University",
+      type: "Premium Educational Institution",
+      icon: BookOpen,
+      description: "World-class education with four prestigious colleges offering advanced programs and research opportunities",
+      features: ["Four Colleges", "Advanced Research", "Global Faculty", "200+ Programs"],
+      href: "/university",
+      color: "from-indigo-500/20 to-transparent"
+    },
+    {
+      id: "hospital",
+      name: "Royale Hospital",
+      type: "Premium Healthcare Center",
+      icon: Heart,
+      description: "State-of-the-art medical facility with specialized departments, advanced technology, and expert care",
+      features: ["500+ Beds", "Specialist Doctors", "24/7 Emergency", "Advanced Diagnostics"],
+      href: "/hospital",
+      color: "from-red-500/20 to-transparent"
+    },
+    {
+      id: "yacht-club",
+      name: "Royale Yacht Club",
+      type: "Exclusive Maritime Club",
+      icon: Anchor,
+      description: "Prestigious waterfront club offering luxury yacht experiences, fine dining, and exclusive membership",
+      features: ["200+ Yachts", "Premium Marina", "Fine Dining", "Water Sports"],
+      href: "/yacht-club",
+      color: "from-blue-400/20 to-transparent"
     }
   ];
 
@@ -154,9 +184,9 @@ export default function GroupLandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                number: "6",
+                number: "10",
                 label: "World-Class Properties",
-                desc: "Luxury hospitality, technology, banking, and construction solutions"
+                desc: "Luxury hospitality, technology, banking, construction, education, and healthcare solutions"
               },
               {
                 number: "2000+",

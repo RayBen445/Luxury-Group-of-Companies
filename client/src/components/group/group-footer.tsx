@@ -86,6 +86,27 @@ export function GroupFooter() {
                   </Button>
                 </Link>
               </li>
+              <li>
+                <Link href="/university">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-university">
+                    University
+                  </Button>
+                </Link>
+              </li>
+              <li>
+                <Link href="/hospital">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-hospital">
+                    Hospital
+                  </Button>
+                </Link>
+              </li>
+              <li>
+                <Link href="/yacht-club">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-yacht-club">
+                    Yacht Club
+                  </Button>
+                </Link>
+              </li>
             </ul>
           </div>
 
