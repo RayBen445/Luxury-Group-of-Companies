@@ -39,10 +39,11 @@ import ConstructionPage from "@/pages/construction";
 import UniversityPage from "@/pages/university";
 import HospitalPage from "@/pages/hospital";
 import YachtClubPage from "@/pages/yacht-club";
+import AirlinePage from "@/pages/airline";
 
 function Router() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline");
 
   return (
     <Switch>
@@ -61,6 +62,7 @@ function Router() {
       <Route path="/university" component={UniversityPage} />
       <Route path="/hospital" component={HospitalPage} />
       <Route path="/yacht-club" component={YachtClubPage} />
+      <Route path="/airline" component={AirlinePage} />
       
       {/* Restaurant Routes */}
       <Route path="/restaurant" component={HomePage} />
@@ -100,7 +102,7 @@ function Router() {
 
 function NavigationWrapper() {
   const [location] = useLocation();
-  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club");
+  const isGroupRoute = location === "/" || location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline");
 
   return isGroupRoute ? <GroupNavigation /> : <Navigation />;
 }

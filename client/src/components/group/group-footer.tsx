@@ -107,6 +107,13 @@ export function GroupFooter() {
                   </Button>
                 </Link>
               </li>
+              <li>
+                <Link href="/airline">
+                  <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-airline">
+                    Airline
+                  </Button>
+                </Link>
+              </li>
             </ul>
           </div>
 
