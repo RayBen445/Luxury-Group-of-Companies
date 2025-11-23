@@ -63,6 +63,7 @@ export class MemStorage implements IStorage {
     const reservation: Reservation = {
       ...insertReservation,
       id,
+      specialRequests: insertReservation.specialRequests ?? null,
       createdAt: new Date(),
     };
     this.reservations.set(id, reservation);
@@ -93,6 +94,7 @@ export class MemStorage implements IStorage {
     const order: FoodOrder = {
       ...insertOrder,
       id,
+      deliveryAddress: insertOrder.deliveryAddress ?? null,
       createdAt: new Date(),
     };
     this.foodOrders.set(id, order);
@@ -185,7 +187,11 @@ export class MemStorage implements IStorage {
   async getTransactionsByAccountId(accountId: string): Promise<Transaction[]> {
     return Array.from(this.transactions.values())
       .filter((txn) => txn.accountId === accountId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      .sort((a, b) => {
+        const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return bTime - aTime;
+      });
   }
 
   private generateAccountNumber(): string {
