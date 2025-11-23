@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart, Car } from "lucide-react";
+import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart, Car, Spa } from "lucide-react";
 import restaurantImage from "@assets/generated_images/luxury_restaurant_exterior_-_la_tavola_royale.png";
 
 export default function GroupLandingPage() {
@@ -116,6 +116,16 @@ export default function GroupLandingPage() {
       features: ["50+ Aircraft", "Global Coverage", "Gourmet Catering", "24/7 Booking"],
       href: "/airline",
       color: "from-sky-500/20 to-transparent"
+    },
+    {
+      id: "spa-wellness",
+      name: "Royale Spa & Wellness",
+      type: "Premium Wellness Retreat",
+      icon: Spa,
+      description: "Exclusive spa and wellness center offering luxury treatments, holistic therapies, and rejuvenation services in a serene environment",
+      features: ["Luxury Spa", "Wellness Retreats", "Expert Therapies", "Premium Treatments"],
+      href: "/spa-wellness",
+      color: "from-pink-500/20 to-transparent"
     },
     {
       id: "supermarket",

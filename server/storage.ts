@@ -152,16 +152,16 @@ export class MemStorage implements IStorage {
       if (productCount >= 1000) break;
     }
 
-    // Create sample vehicles
+    // Create sample vehicles with different grades
     const sampleVehicles = [
-      { name: "Royale Phantom", year: 2024, type: "sedan", price: "450000", horsepower: 563, acceleration: 5.1, transmission: "8-Speed Automatic", isElectric: false, isNew: true },
-      { name: "Royale Spectre", year: 2024, type: "luxury", price: "350000", horsepower: 536, acceleration: 5.3, transmission: "8-Speed Automatic", isElectric: false, isNew: true },
-      { name: "Royale Ghost", year: 2024, type: "sedan", price: "320000", horsepower: 563, acceleration: 5.0, transmission: "9-Speed Automatic", isElectric: false, isNew: true },
-      { name: "Royale Cullinan", year: 2024, type: "suv", price: "550000", horsepower: 563, acceleration: 5.2, transmission: "8-Speed Automatic", isElectric: false, isNew: true },
-      { name: "Royale Wraith", year: 2024, type: "sports", price: "420000", horsepower: 624, acceleration: 4.8, transmission: "8-Speed Automatic", isElectric: false, isNew: true },
-      { name: "Royale EV Supreme", year: 2024, type: "electric", price: "380000", horsepower: 500, acceleration: 4.9, range: "500 miles", transmission: "1-Speed Direct Drive", isElectric: true, isNew: true },
-      { name: "Royale Dawn", year: 2024, type: "luxury", price: "280000", horsepower: 536, acceleration: 5.5, transmission: "8-Speed Automatic", isElectric: false, isNew: true },
-      { name: "Royale Black Badge", year: 2024, type: "sports", price: "380000", horsepower: 563, acceleration: 3.9, transmission: "8-Speed Automatic", isElectric: false, isNew: true },
+      { name: "Royale Phantom", year: 2024, type: "sedan", price: "450000", horsepower: 563, acceleration: 5.1, transmission: "8-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "rolls_royce_phantom_luxury_sedan.png", interiorImage: "phantom_interior_premium_cabin.png", grade: "Platinum" },
+      { name: "Royale Spectre", year: 2024, type: "luxury", price: "350000", horsepower: 536, acceleration: 5.3, transmission: "8-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "rolls_royce_phantom_luxury_sedan.png", interiorImage: "phantom_interior_premium_cabin.png", grade: "Gold" },
+      { name: "Royale Ghost", year: 2024, type: "sedan", price: "320000", horsepower: 563, acceleration: 5.0, transmission: "9-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "rolls_royce_phantom_luxury_sedan.png", interiorImage: "phantom_interior_premium_cabin.png", grade: "Silver" },
+      { name: "Royale Cullinan", year: 2024, type: "suv", price: "550000", horsepower: 563, acceleration: 5.2, transmission: "8-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "bentley_luxury_suv_exterior.png", interiorImage: "bentley_suv_luxury_interior.png", grade: "Platinum" },
+      { name: "Royale Wraith", year: 2024, type: "sports", price: "420000", horsepower: 624, acceleration: 4.8, transmission: "8-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "mercedes_amg_sports_exterior.png", interiorImage: "amg_sports_interior_cockpit.png", grade: "Platinum" },
+      { name: "Royale EV Supreme", year: 2024, type: "electric", price: "380000", horsepower: 500, acceleration: 4.9, range: "500 miles", transmission: "1-Speed Direct Drive", isElectric: true, isNew: true, exteriorImage: "tesla_model_s_electric_car.png", interiorImage: "tesla_model_s_interior_tech.png", grade: "Diamond" },
+      { name: "Royale Dawn", year: 2024, type: "luxury", price: "280000", horsepower: 536, acceleration: 5.5, transmission: "8-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "bentley_luxury_suv_exterior.png", interiorImage: "bentley_suv_luxury_interior.png", grade: "Gold" },
+      { name: "Royale Black Badge", year: 2024, type: "sports", price: "380000", horsepower: 563, acceleration: 3.9, transmission: "8-Speed Automatic", isElectric: false, isNew: true, exteriorImage: "mercedes_amg_sports_exterior.png", interiorImage: "amg_sports_interior_cockpit.png", grade: "Gold" },
     ];
 
     for (const v of sampleVehicles) {

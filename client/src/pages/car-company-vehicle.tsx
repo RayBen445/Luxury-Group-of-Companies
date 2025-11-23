@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Zap, Users, Gauge } from "lucide-react";
-import vehicleShowroomImage from "@assets/generated_images/luxury_vehicle_in_showroom.png";
-import vehicleInteriorImage from "@assets/generated_images/luxury_car_premium_interior.png";
 
 type Vehicle = any;
 
@@ -39,12 +37,9 @@ export default function CarCompanyVehiclePage() {
           <div className="space-y-4" data-testid="container-images">
             <Card className="hover-elevate" data-testid="card-image-exterior">
               <CardContent className="p-8">
-                <img 
-                  src={vehicleShowroomImage}
-                  alt={`${vehicle.name} Exterior`}
-                  className="w-full h-full object-cover rounded-lg"
-                  data-testid="img-vehicle-exterior"
-                />
+                <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center text-4xl" data-testid="img-vehicle-exterior">
+                  🏎️
+                </div>
                 <p className="text-center text-sm text-muted-foreground mt-4" data-testid="text-exterior-note">
                   Exterior Design
                 </p>
@@ -52,12 +47,9 @@ export default function CarCompanyVehiclePage() {
             </Card>
             <Card className="hover-elevate" data-testid="card-image-interior">
               <CardContent className="p-8">
-                <img 
-                  src={vehicleInteriorImage}
-                  alt={`${vehicle.name} Interior`}
-                  className="w-full h-full object-cover rounded-lg"
-                  data-testid="img-vehicle-interior"
-                />
+                <div className="aspect-video bg-muted rounded-lg mb-4 flex items-center justify-center text-4xl" data-testid="img-vehicle-interior">
+                  🎛️
+                </div>
                 <p className="text-center text-sm text-muted-foreground mt-4" data-testid="text-interior-note">
                   Premium Interior
                 </p>
@@ -74,7 +66,12 @@ export default function CarCompanyVehiclePage() {
               {vehicle.year} • {vehicle.type}
             </p>
 
-            <div className="flex gap-2 mb-6" data-testid="container-badges">
+            <div className="flex gap-2 mb-6 flex-wrap" data-testid="container-badges">
+              {vehicle.grade && (
+                <Badge className="bg-amber-500/20 text-amber-700 dark:text-amber-400 border-amber-500/30" data-testid="badge-grade">
+                  {vehicle.grade} Grade
+                </Badge>
+              )}
               {vehicle.isElectric && (
                 <Badge data-testid="badge-electric">Electric</Badge>
               )}
