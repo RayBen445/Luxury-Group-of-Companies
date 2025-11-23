@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Zap, Users, Gauge } from "lucide-react";
 import vehicleShowroomImage from "@assets/generated_images/luxury_vehicle_in_showroom.png";
+import vehicleInteriorImage from "@assets/generated_images/luxury_car_premium_interior.png";
 
 type Vehicle = any;
 
@@ -34,20 +35,35 @@ export default function CarCompanyVehiclePage() {
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8" data-testid="grid-vehicle">
-          {/* Vehicle Image */}
-          <Card className="hover-elevate" data-testid="card-image">
-            <CardContent className="p-8">
-              <img 
-                src={vehicleShowroomImage}
-                alt={vehicle.name}
-                className="w-full h-full object-cover rounded-lg"
-                data-testid="img-vehicle"
-              />
-              <p className="text-center text-sm text-muted-foreground mt-4" data-testid="text-image-note">
-                Official vehicle imagery
-              </p>
-            </CardContent>
-          </Card>
+          {/* Vehicle Images */}
+          <div className="space-y-4" data-testid="container-images">
+            <Card className="hover-elevate" data-testid="card-image-exterior">
+              <CardContent className="p-8">
+                <img 
+                  src={vehicleShowroomImage}
+                  alt={`${vehicle.name} Exterior`}
+                  className="w-full h-full object-cover rounded-lg"
+                  data-testid="img-vehicle-exterior"
+                />
+                <p className="text-center text-sm text-muted-foreground mt-4" data-testid="text-exterior-note">
+                  Exterior Design
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="hover-elevate" data-testid="card-image-interior">
+              <CardContent className="p-8">
+                <img 
+                  src={vehicleInteriorImage}
+                  alt={`${vehicle.name} Interior`}
+                  className="w-full h-full object-cover rounded-lg"
+                  data-testid="img-vehicle-interior"
+                />
+                <p className="text-center text-sm text-muted-foreground mt-4" data-testid="text-interior-note">
+                  Premium Interior
+                </p>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Vehicle Details */}
           <div data-testid="container-details">

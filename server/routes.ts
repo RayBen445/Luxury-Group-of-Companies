@@ -116,7 +116,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/products", async (req, res) => {
     try {
       const products = await storage.getProducts();
-      res.json(products);
+      const categories = await storage.getCategories();
+      const categoryMap = new Map(categories.map(c => [c.id, c]));
+      
+      // Add category names to products for frontend use
+      const productsWithCategories = products.map(p => ({
+        ...p,
+        categoryName: categoryMap.get(p.categoryId)?.name || "Unknown"
+      }));
+      
+      res.json(productsWithCategories);
     } catch (error) {
       console.error("Error fetching products:", error);
       res.status(500).json({ error: "Failed to fetch products" });

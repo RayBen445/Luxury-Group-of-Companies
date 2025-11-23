@@ -77,7 +77,6 @@ export class MemStorage implements IStorage {
       { name: "Frozen Foods", description: "Frozen meals", icon: "❄️" },
       { name: "Health & Beauty", description: "Personal care", icon: "💆" },
       { name: "Household", description: "Cleaning supplies", icon: "🧹" },
-      { name: "Electronics", description: "Home electronics", icon: "📱" },
     ];
 
     for (const cat of defaultCategories) {
@@ -89,38 +88,68 @@ export class MemStorage implements IStorage {
       });
     }
 
-    // Create sample products
+    // Create 1000 products
     const categoryIds = Array.from(this.categories.values());
-    const sampleProducts = [
-      { name: "Organic Apples", category: 0, price: "2.99", stock: 100 },
-      { name: "Fresh Carrots", category: 0, price: "1.99", stock: 150 },
-      { name: "Whole Milk", category: 1, price: "3.49", stock: 80 },
-      { name: "Free Range Eggs", category: 1, price: "4.99", stock: 120 },
-      { name: "Prime Beef", category: 2, price: "12.99", stock: 50 },
-      { name: "Fresh Salmon", category: 2, price: "10.99", stock: 40 },
-      { name: "Sourdough Bread", category: 3, price: "3.99", stock: 60 },
-      { name: "Chocolate Cookies", category: 6, price: "2.49", stock: 200 },
-      { name: "Orange Juice", category: 4, price: "3.99", stock: 100 },
-      { name: "Potato Chips", category: 5, price: "1.99", stock: 300 },
+    const productTemplates = [
+      { name: "Organic Apples", category: 0, price: 2.99, stock: 100 },
+      { name: "Fresh Carrots", category: 0, price: 1.99, stock: 150 },
+      { name: "Whole Milk", category: 1, price: 3.49, stock: 80 },
+      { name: "Free Range Eggs", category: 1, price: 4.99, stock: 120 },
+      { name: "Prime Beef", category: 2, price: 12.99, stock: 50 },
+      { name: "Fresh Salmon", category: 2, price: 10.99, stock: 40 },
+      { name: "Sourdough Bread", category: 3, price: 3.99, stock: 60 },
+      { name: "Chocolate Cookies", category: 5, price: 2.49, stock: 200 },
+      { name: "Orange Juice", category: 4, price: 3.99, stock: 100 },
+      { name: "Potato Chips", category: 5, price: 1.99, stock: 300 },
+      { name: "Frozen Pizza", category: 6, price: 8.99, stock: 75 },
+      { name: "Shampoo", category: 7, price: 6.99, stock: 120 },
+      { name: "Paper Towels", category: 8, price: 4.49, stock: 200 },
+      { name: "Broccoli", category: 0, price: 2.49, stock: 90 },
+      { name: "Bananas", category: 0, price: 1.49, stock: 180 },
+      { name: "Greek Yogurt", category: 1, price: 5.99, stock: 110 },
+      { name: "Cheddar Cheese", category: 1, price: 7.99, stock: 60 },
+      { name: "Ground Beef", category: 2, price: 9.99, stock: 45 },
+      { name: "Chicken Breast", category: 2, price: 11.99, stock: 55 },
+      { name: "Croissants", category: 3, price: 4.49, stock: 70 },
+      { name: "Granola Bars", category: 5, price: 1.99, stock: 250 },
+      { name: "Sparkling Water", category: 4, price: 2.99, stock: 150 },
+      { name: "Almond Milk", category: 1, price: 3.79, stock: 95 },
+      { name: "Pasta", category: 5, price: 1.29, stock: 300 },
+      { name: "Olive Oil", category: 5, price: 9.99, stock: 40 },
+      { name: "Tomato Sauce", category: 5, price: 2.49, stock: 150 },
+      { name: "Peanut Butter", category: 5, price: 4.99, stock: 120 },
+      { name: "Honey", category: 5, price: 7.99, stock: 60 },
+      { name: "Rice", category: 5, price: 3.49, stock: 100 },
+      { name: "Quinoa", category: 5, price: 8.99, stock: 50 },
     ];
 
-    for (let i = 0; i < sampleProducts.length; i++) {
-      const p = sampleProducts[i];
-      const id = randomUUID();
-      this.products.set(id, {
-        id,
-        name: p.name,
-        description: `Premium quality ${p.name}`,
-        categoryId: categoryIds[p.category].id,
-        price: p.price,
-        discountPrice: undefined,
-        stock: p.stock,
-        image: undefined,
-        rating: "4.5",
-        isOrganic: Math.random() > 0.5,
-        isFeatured: i < 5,
-        createdAt: new Date(),
-      });
+    let productCount = 0;
+    for (let batch = 0; batch < 34; batch++) {
+      for (let i = 0; i < productTemplates.length; i++) {
+        if (productCount >= 1000) break;
+        
+        const template = productTemplates[i];
+        const id = randomUUID();
+        const variantName = batch > 0 ? `${template.name} (Variant ${batch + 1})` : template.name;
+        const price = (template.price + (Math.random() * 2 - 1)).toFixed(2);
+        
+        this.products.set(id, {
+          id,
+          name: variantName,
+          description: `Premium quality ${variantName}`,
+          categoryId: categoryIds[template.category].id,
+          price: price,
+          discountPrice: undefined,
+          stock: Math.floor(template.stock * (0.8 + Math.random() * 0.4)),
+          image: undefined,
+          rating: (4 + Math.random()).toFixed(1),
+          isOrganic: Math.random() > 0.6,
+          isFeatured: productCount < 8,
+          createdAt: new Date(),
+        });
+        productCount++;
+      }
+      if (productCount >= 1000) break;
     }
 
     // Create sample vehicles

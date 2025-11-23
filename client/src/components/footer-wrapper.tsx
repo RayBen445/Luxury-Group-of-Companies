@@ -11,6 +11,8 @@ import { UniversityFooter } from "@/components/university/university-footer";
 import { HospitalFooter } from "@/components/hospital/hospital-footer";
 import { YachtClubFooter } from "@/components/yacht-club/yacht-club-footer";
 import { AirlineFooter } from "@/components/airline/airline-footer";
+import { SupermarketFooter } from "@/components/supermarket/supermarket-footer";
+import { CarCompanyFooter } from "@/components/car-company/car-company-footer";
 
 export function FooterWrapper() {
   const [location] = useLocation();
@@ -38,6 +40,10 @@ export function FooterWrapper() {
     return <YachtClubFooter />;
   } else if (location.startsWith("/airline")) {
     return <AirlineFooter />;
+  } else if (location.startsWith("/supermarket")) {
+    return <SupermarketFooter />;
+  } else if (location.startsWith("/car-company")) {
+    return <CarCompanyFooter />;
   } else {
     // Restaurant and all other routes use the restaurant footer
     return <Footer />;

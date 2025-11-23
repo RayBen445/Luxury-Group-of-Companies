@@ -181,12 +181,28 @@ export default function SupermarketPage() {
 }
 
 function ProductCard({ product }: { product: Product }) {
+  // Map categories to icons/emojis for visual representation
+  const getCategoryIcon = (categoryName: string) => {
+    const icons: Record<string, string> = {
+      "Fruits & Vegetables": "🥬",
+      "Dairy & Eggs": "🥛",
+      "Meat & Seafood": "🍖",
+      "Bakery": "🥐",
+      "Beverages": "🧃",
+      "Snacks": "🍿",
+      "Frozen Foods": "🧊",
+      "Health & Beauty": "💆",
+      "Household": "🧹",
+    };
+    return icons[categoryName] || "📦";
+  };
+
   return (
     <Link href={`/supermarket/product/${product.id}`}>
       <Card className="hover-elevate cursor-pointer h-full" data-testid={`card-product-${product.id}`}>
         <CardContent className="p-4">
-          <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center text-4xl" data-testid={`img-product-${product.id}`}>
-            {product.isFeatured && "⭐"}
+          <div className="aspect-square bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg mb-4 flex items-center justify-center text-5xl" data-testid={`img-product-${product.id}`}>
+            {getCategoryIcon(product.categoryName || "")}
           </div>
           <h3 className="font-semibold mb-2 line-clamp-2" data-testid={`text-name-${product.id}`}>
             {product.name}
