@@ -13,18 +13,8 @@ export function FooterWrapper() {
   // Determine which footer to show based on the current route
   if (location === "/" || location === "") {
     return <GroupFooter />;
-  } else if (location.startsWith("/hotel")) {
-    return <HotelFooter />;
-  } else if (location.startsWith("/club")) {
-    return <ClubFooter />;
-  } else if (location.startsWith("/lounge")) {
-    return <LoungeFooter />;
-  } else if (location.startsWith("/tech")) {
-    return <TechFooter />;
-  } else if (location.startsWith("/bank")) {
-    return <BankFooter />;
-  } else if (location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline")) {
-    // Group properties use the group footer
+  } else if (location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline")) {
+    // All group properties use the group footer
     return <GroupFooter />;
   } else {
     // Restaurant and all other routes use the restaurant footer
