@@ -1,8 +1,20 @@
-import type { Express } from "express";
+import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertReservationSchema, insertNewsletterSchema, insertFoodOrderSchema, insertBankAccountSchema, insertBankCardSchema, insertTransactionSchema, insertUserSchema } from "@shared/schema";
 import { z } from "zod";
+
+// Type augmentation for express-session
+declare global {
+  namespace Express {
+    interface Request {
+      session: {
+        userId?: string;
+        destroy(callback: (err?: Error) => void): void;
+      };
+    }
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
@@ -48,7 +60,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/auth/logout", (req, res) => {
-    req.session.destroy((err) => {
+    req.session.destroy((err?: Error) => {
       if (err) {
         return res.status(500).json({ error: "Failed to logout" });
       }
