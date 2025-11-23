@@ -65,20 +65,28 @@ app.use((req, res, next) => {
 });
 
 export default async function runApp(
-  setup: (app: Express, server: Server) => Promise<void>,
+  setup: (app: Express, server?: Server) => Promise<void>,
 ) {
+  // In production — Vercel Serverless
+  // Return the Express app WITHOUT calling listen()
+  // Vercel will wrap it in their own server
+  if (process.env.NODE_ENV === "production") {
+    await setup(app);
+    return app;
+  }
+
+  // In development — local machine
+  // Start the HTTP server and mount Vite
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
     res.status(status).json({ message });
     throw err;
   });
 
-  // importantly run the final setup after setting up all the other routes so
-  // the catch-all route doesn't interfere with the other routes
+  // Run setup after all routes (dev uses Vite middleware, prod uses static files)
   await setup(app, server);
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
@@ -93,4 +101,6 @@ export default async function runApp(
   }, () => {
     log(`serving on port ${port}`);
   });
+
+  return app;
 }

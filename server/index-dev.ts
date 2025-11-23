@@ -9,7 +9,11 @@ import { createServer as createViteServer, createLogger } from "vite";
 import viteConfig from "../vite.config";
 import runApp from "./app";
 
-export async function setupVite(app: Express, server: Server) {
+export async function setupVite(app: Express, server?: Server) {
+  if (!server) {
+    throw new Error("setupVite requires a server instance in development mode");
+  }
+
   const viteLogger = createLogger();
   const serverOptions = {
     middlewareMode: true,
