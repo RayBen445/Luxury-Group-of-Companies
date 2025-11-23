@@ -97,7 +97,7 @@ export default function HospitalPage() {
             </Badge>
           </Link>
           <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6 text-white drop-shadow-lg" data-testid="text-hospital-title">
-            Royale Hospital
+            Royale Luxury Hospital
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mb-8 drop-shadow-md" data-testid="text-hospital-desc">
             Premium healthcare excellence with advanced medical technology, world-class specialists, and compassionate patient care in a luxury environment.

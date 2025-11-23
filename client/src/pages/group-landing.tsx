@@ -68,7 +68,7 @@ export default function GroupLandingPage() {
     },
     {
       id: "construction",
-      name: "Royale Construction",
+      name: "Royale Luxury Construction",
       type: "Luxury Development Company",
       icon: Building2,
       description: "Premium construction and real estate development creating iconic structures and luxury residences",
@@ -78,7 +78,7 @@ export default function GroupLandingPage() {
     },
     {
       id: "university",
-      name: "Royale University",
+      name: "Royale Luxury University",
       type: "Premium Educational Institution",
       icon: BookOpen,
       description: "World-class education with four prestigious colleges offering advanced programs and research opportunities",
@@ -88,7 +88,7 @@ export default function GroupLandingPage() {
     },
     {
       id: "hospital",
-      name: "Royale Hospital",
+      name: "Royale Luxury Hospital",
       type: "Premium Healthcare Center",
       icon: Heart,
       description: "State-of-the-art medical facility with specialized departments, advanced technology, and expert care",
@@ -98,7 +98,7 @@ export default function GroupLandingPage() {
     },
     {
       id: "yacht-club",
-      name: "Royale Yacht Club",
+      name: "Royale Luxury Yacht Club",
       type: "Exclusive Maritime Club",
       icon: Anchor,
       description: "Prestigious waterfront club offering luxury yacht experiences, fine dining, and exclusive membership",
@@ -108,7 +108,7 @@ export default function GroupLandingPage() {
     },
     {
       id: "airline",
-      name: "Royale Airways",
+      name: "Royale Luxury Airways",
       type: "Luxury Private Aviation",
       icon: Plane,
       description: "Premium private jet charter services offering luxury air travel with personalized service to global destinations",

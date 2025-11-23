@@ -100,7 +100,7 @@ export default function ConstructionPage() {
             </Badge>
           </Link>
           <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6 text-white drop-shadow-lg" data-testid="text-construction-title">
-            Royale Construction
+            Royale Luxury Construction
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mb-8 drop-shadow-md" data-testid="text-construction-desc">
             Building luxury, creating dreams. Premium construction services crafting iconic structures and exceptional living spaces worldwide.

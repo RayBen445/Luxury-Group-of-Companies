@@ -23,6 +23,9 @@ export function FooterWrapper() {
     return <TechFooter />;
   } else if (location.startsWith("/bank")) {
     return <BankFooter />;
+  } else if (location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline")) {
+    // Group properties use the group footer
+    return <GroupFooter />;
   } else {
     // Restaurant and all other routes use the restaurant footer
     return <Footer />;

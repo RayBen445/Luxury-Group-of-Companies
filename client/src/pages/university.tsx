@@ -97,7 +97,7 @@ export default function UniversityPage() {
             </Badge>
           </Link>
           <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6 text-white drop-shadow-lg" data-testid="text-university-title">
-            Royale University
+            Royale Luxury University
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mb-8 drop-shadow-md" data-testid="text-university-desc">
             A beacon of academic excellence with world-class education, innovative research, and transformative student experiences across four prestigious colleges.
