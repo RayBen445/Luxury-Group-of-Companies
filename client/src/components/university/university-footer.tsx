@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
-export function TechFooter() {
+export function UniversityFooter() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -28,16 +28,16 @@ export function TechFooter() {
   };
 
   return (
-    <footer className="bg-card border-t py-16 px-4 sm:px-6 lg:px-8" data-testid="footer-tech">
+    <footer className="bg-card border-t py-16 px-4 sm:px-6 lg:px-8" data-testid="footer-university">
       <div className="container mx-auto max-w-7xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div data-testid="footer-section-brand">
-            <h3 className="font-serif text-2xl font-bold mb-4 gradient-text">Tech Hub</h3>
+            <h3 className="font-serif text-2xl font-bold mb-4 gradient-text">Luxury University</h3>
             <p className="text-muted-foreground text-sm mb-4" data-testid="text-tagline">
-              Innovation Meets Excellence.
+              Excellence in Education.
             </p>
             <p className="text-muted-foreground text-sm" data-testid="text-footer-desc">
-              Cutting-edge technology solutions and digital experiences at the forefront of innovation.
+              Premier institution for higher learning and intellectual excellence.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ export function TechFooter() {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/tech">
+                <Link href="/university">
                   <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-footer-home">
                     Home
                   </Button>
@@ -75,27 +75,27 @@ export function TechFooter() {
             </ul>
           </div>
 
-          <div data-testid="footer-section-solutions">
-            <h4 className="font-semibold mb-4">Solutions</h4>
+          <div data-testid="footer-section-programs">
+            <h4 className="font-semibold mb-4">Programs</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-development">
-                  Development
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-undergraduate">
+                  Undergraduate
                 </Button>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-consulting">
-                  Consulting
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-graduate">
+                  Graduate
                 </Button>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-digital">
-                  Digital Strategy
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-research">
+                  Research
                 </Button>
               </li>
               <li>
-                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-support">
-                  Support
+                <Button variant="link" className="p-0 h-auto text-muted-foreground hover:text-foreground" data-testid="link-admissions">
+                  Admissions
                 </Button>
               </li>
             </ul>
@@ -123,12 +123,12 @@ export function TechFooter() {
                   WhatsApp
                 </Button>
               </a>
-              <a href="mailto:luxurytech@gmail.com">
+              <a href="mailto:luxuryuniversity@gmail.com">
                 <Button variant="outline" className="w-full text-sm justify-start" data-testid="button-email-contact">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  luxurytech@gmail.com
+                  luxuryuniversity@gmail.com
                 </Button>
               </a>
             </div>
@@ -137,7 +137,7 @@ export function TechFooter() {
           <div data-testid="footer-section-newsletter">
             <h4 className="font-semibold mb-4">Newsletter</h4>
             <p className="text-muted-foreground text-sm mb-3" data-testid="text-newsletter-desc">
-              Latest tech updates
+              Campus news & events
             </p>
             <form onSubmit={handleNewsletter} className="space-y-2" data-testid="form-newsletter">
               <Input
@@ -163,7 +163,7 @@ export function TechFooter() {
         <div className="border-t pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm" data-testid="text-copyright">
-              © 2024 Tech Hub. All rights reserved.
+              © 2024 Luxury University. All rights reserved.
             </p>
             <div className="flex gap-4">
               <Button variant="ghost" size="sm" data-testid="link-facebook">

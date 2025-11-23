@@ -6,6 +6,11 @@ import { ClubFooter } from "@/components/club/club-footer";
 import { LoungeFooter } from "@/components/lounge/lounge-footer";
 import { TechFooter } from "@/components/tech/tech-footer";
 import { BankFooter } from "@/components/bank/bank-footer";
+import { ConstructionFooter } from "@/components/construction/construction-footer";
+import { UniversityFooter } from "@/components/university/university-footer";
+import { HospitalFooter } from "@/components/hospital/hospital-footer";
+import { YachtClubFooter } from "@/components/yacht-club/yacht-club-footer";
+import { AirlineFooter } from "@/components/airline/airline-footer";
 
 export function FooterWrapper() {
   const [location] = useLocation();
@@ -13,9 +18,26 @@ export function FooterWrapper() {
   // Determine which footer to show based on the current route
   if (location === "/" || location === "") {
     return <GroupFooter />;
-  } else if (location.startsWith("/hotel") || location.startsWith("/club") || location.startsWith("/lounge") || location.startsWith("/tech") || location.startsWith("/bank") || location.startsWith("/construction") || location.startsWith("/university") || location.startsWith("/hospital") || location.startsWith("/yacht-club") || location.startsWith("/airline")) {
-    // All group properties use the group footer
-    return <GroupFooter />;
+  } else if (location.startsWith("/hotel")) {
+    return <HotelFooter />;
+  } else if (location.startsWith("/club")) {
+    return <ClubFooter />;
+  } else if (location.startsWith("/lounge")) {
+    return <LoungeFooter />;
+  } else if (location.startsWith("/tech")) {
+    return <TechFooter />;
+  } else if (location.startsWith("/bank")) {
+    return <BankFooter />;
+  } else if (location.startsWith("/construction")) {
+    return <ConstructionFooter />;
+  } else if (location.startsWith("/university")) {
+    return <UniversityFooter />;
+  } else if (location.startsWith("/hospital")) {
+    return <HospitalFooter />;
+  } else if (location.startsWith("/yacht-club")) {
+    return <YachtClubFooter />;
+  } else if (location.startsWith("/airline")) {
+    return <AirlineFooter />;
   } else {
     // Restaurant and all other routes use the restaurant footer
     return <Footer />;
