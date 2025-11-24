@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Building2 } from "lucide-react";
+import { Menu, X, Building2, ChevronDown } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/restaurant/theme-toggle";
 import { motion } from "framer-motion";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 export function GroupNavigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,10 +27,23 @@ export function GroupNavigation() {
 
   const groupLinks = [
     { name: "Home", href: "/" },
-    { name: "Hotel", href: "/hotel" },
     { name: "Restaurant", href: "/restaurant" },
+  ];
+
+  const properties = [
+    { name: "Hotel", href: "/hotel" },
     { name: "Club", href: "/club" },
     { name: "Lounge", href: "/lounge" },
+    { name: "Tech", href: "/tech" },
+    { name: "Bank", href: "/bank" },
+    { name: "Construction", href: "/construction" },
+    { name: "University", href: "/university" },
+    { name: "Hospital", href: "/hospital" },
+    { name: "Yacht Club", href: "/yacht-club" },
+    { name: "Airline", href: "/airline" },
+    { name: "Spa & Wellness", href: "/spa-wellness" },
+    { name: "Supermarket", href: "/supermarket" },
+    { name: "Car Company", href: "/car-company" },
   ];
 
   return (
@@ -69,6 +89,35 @@ export function GroupNavigation() {
                 </Button>
               </Link>
             ))}
+            
+            {/* Properties Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="hover-elevate active-elevate-2 flex items-center gap-1"
+                  data-testid="button-group-properties-menu"
+                >
+                  Properties
+                  <ChevronDown className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                {properties.map((prop, idx) => (
+                  <div key={prop.name}>
+                    {idx === 3 || idx === 6 ? <DropdownMenuSeparator /> : null}
+                    <Link href={prop.href}>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        data-testid={`link-properties-${prop.name.toLowerCase()}`}
+                      >
+                        {prop.name}
+                      </DropdownMenuItem>
+                    </Link>
+                  </div>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="hidden md:flex items-center space-x-2">
@@ -110,10 +159,27 @@ export function GroupNavigation() {
                 </Button>
               </Link>
             ))}
+            
+            <div className="pt-2 border-t">
+              <p className="px-2 py-2 text-sm font-semibold text-muted-foreground">Properties</p>
+              {properties.map((prop) => (
+                <Link key={prop.name} href={prop.href}>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full justify-start pl-6 hover-elevate active-elevate-2 text-sm"
+                    data-testid={`link-group-mobile-${prop.name.toLowerCase()}`}
+                  >
+                    {prop.name}
+                  </Button>
+                </Link>
+              ))}
+            </div>
+            
             <Link href="/hotel">
               <Button
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full pulse-gold"
+                className="w-full pulse-gold mt-4"
                 data-testid="button-group-mobile-book"
               >
                 Book Hotel
