@@ -3,6 +3,7 @@ import { Menu, X, Building2 } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/restaurant/theme-toggle";
+import { motion } from "framer-motion";
 
 export function GroupNavigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -26,21 +27,34 @@ export function GroupNavigation() {
   ];
 
   return (
-    <nav
+    <motion.nav
       className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled ? "glass-effect shadow-lg" : "bg-transparent"
       }`}
       data-testid="nav-group"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer hover:opacity-80" data-testid="group-logo">
-              <Building2 className="w-6 h-6 text-primary" />
+            <motion.div
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80"
+              data-testid="group-logo"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              >
+                <Building2 className="w-6 h-6 text-primary" />
+              </motion.div>
               <h1 className="font-serif text-xl sm:text-2xl gradient-text font-bold">
                 Luxury Group
               </h1>
-            </div>
+            </motion.div>
           </Link>
 
           <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
@@ -108,6 +122,6 @@ export function GroupNavigation() {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 }

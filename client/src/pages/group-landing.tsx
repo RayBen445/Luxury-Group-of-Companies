@@ -3,9 +3,16 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Wine, Star, Zap, CreditCard, Building2, BookOpen, Heart, Anchor, Plane, ShoppingCart, Car, Leaf } from "lucide-react";
+import { motion } from "framer-motion";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 import restaurantImage from "@assets/generated_images/luxury_restaurant_exterior_-_la_tavola_royale.png";
 
 export default function GroupLandingPage() {
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
   const properties = [
     {
       id: "restaurant",
@@ -149,20 +156,50 @@ export default function GroupLandingPage() {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <motion.div
+          className="absolute inset-0 z-0"
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
           <img 
             src={restaurantImage} 
             alt="La Tavola Royale - Main Company Headquarters" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50"></div>
-        </div>
+        </motion.div>
         <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="text-center mb-16">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <Badge className="mb-6 backdrop-blur-sm">Luxury Hospitality Group</Badge>
             <h1 className="font-serif text-5xl sm:text-7xl font-bold mb-6 text-white drop-shadow-lg">
               Experience Luxury
@@ -170,7 +207,12 @@ export default function GroupLandingPage() {
             <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8 drop-shadow-md">
               Discover our curated collection of premium establishments, each designed to deliver exceptional experiences in fine dining, hospitality, and entertainment.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+            >
               <Link href="/restaurant">
                 <Button size="lg" className="pulse-gold">
                   Explore Restaurant
@@ -181,8 +223,8 @@ export default function GroupLandingPage() {
                   Book Hotel
                 </Button>
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -190,39 +232,62 @@ export default function GroupLandingPage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           {/* Properties Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {properties.map((property) => {
               const PropertyIcon = property.icon;
               return (
-                <Link key={property.id} href={property.href}>
-                  <Card className={`overflow-hidden hover-elevate cursor-pointer transition-all h-full bg-gradient-to-br ${property.color} border-primary/20`} data-testid={`card-property-${property.id}`}>
-                    <CardContent className="p-8">
-                      <div className="flex items-start justify-between mb-4">
-                        <PropertyIcon className="w-12 h-12 text-primary" />
-                        <Badge variant="secondary">{property.type}</Badge>
-                      </div>
-                      <h3 className="font-serif text-2xl font-bold mb-2" data-testid={`text-property-name-${property.id}`}>
-                        {property.name}
-                      </h3>
-                      <p className="text-muted-foreground mb-6" data-testid={`text-property-desc-${property.id}`}>
-                        {property.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {property.features.map((feature) => (
-                          <Badge key={feature} variant="outline" className="text-xs">
-                            {feature}
-                          </Badge>
-                        ))}
-                      </div>
-                      <Button className="w-full" data-testid={`button-explore-${property.id}`}>
-                        Explore {property.name}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <motion.div
+                  key={property.id}
+                  variants={itemVariants}
+                  data-aos="fade-up"
+                  data-aos-duration="800"
+                >
+                  <Link href={property.href}>
+                    <motion.div
+                      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Card className={`overflow-hidden hover-elevate cursor-pointer transition-all h-full bg-gradient-to-br ${property.color} border-primary/20`} data-testid={`card-property-${property.id}`}>
+                        <CardContent className="p-8">
+                          <motion.div
+                            className="flex items-start justify-between mb-4"
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                          >
+                            <PropertyIcon className="w-12 h-12 text-primary" />
+                            <Badge variant="secondary">{property.type}</Badge>
+                          </motion.div>
+                          <h3 className="font-serif text-2xl font-bold mb-2" data-testid={`text-property-name-${property.id}`}>
+                            {property.name}
+                          </h3>
+                          <p className="text-muted-foreground mb-6" data-testid={`text-property-desc-${property.id}`}>
+                            {property.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-6">
+                            {property.features.map((feature) => (
+                              <Badge key={feature} variant="outline" className="text-xs">
+                                {feature}
+                              </Badge>
+                            ))}
+                          </div>
+                          <Button className="w-full" data-testid={`button-explore-${property.id}`}>
+                            Explore {property.name}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  </Link>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
