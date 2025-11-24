@@ -359,7 +359,7 @@ export class MemStorage implements IStorage {
   async getUserOrders(userId: string): Promise<Order[]> {
     return Array.from(this.orders.values())
       .filter((o) => o.userId === userId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      .sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
   }
 
   async createReview(data: InsertReview): Promise<Review> {
@@ -379,7 +379,7 @@ export class MemStorage implements IStorage {
   async getProductReviews(productId: string): Promise<Review[]> {
     return Array.from(this.reviews.values())
       .filter((r) => r.productId === productId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      .sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
   }
 
   async createVehicle(data: InsertVehicle): Promise<Vehicle> {
