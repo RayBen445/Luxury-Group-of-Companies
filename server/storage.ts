@@ -139,9 +139,9 @@ export class MemStorage implements IStorage {
           description: `Premium quality ${variantName}`,
           categoryId: categoryIds[template.category].id,
           price: price,
-          discountPrice: undefined,
+          discountPrice: null,
           stock: Math.floor(template.stock * (0.8 + Math.random() * 0.4)),
-          image: undefined,
+          image: null,
           rating: (4 + Math.random()).toFixed(1),
           isOrganic: Math.random() > 0.6,
           isFeatured: productCount < 8,
@@ -185,10 +185,10 @@ export class MemStorage implements IStorage {
         type: v.type,
         price: v.price,
         horsepower: v.horsepower,
-        acceleration: v.acceleration,
+        acceleration: String(v.acceleration),
         transmission: v.transmission,
-        range: (v as any).range || undefined,
-        mpg: undefined,
+        range: (v as any).range || null,
+        mpg: null,
         isElectric: v.isElectric,
         isNew: v.isNew,
         createdAt: new Date(),
@@ -208,9 +208,12 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const hashedPassword = await bcryptjs.hash(insertUser.password, 10);
     const user: User = {
-      ...insertUser,
-      id,
+      username: insertUser.username,
       password: hashedPassword,
+      email: insertUser.email || null,
+      phone: insertUser.phone || null,
+      address: insertUser.address || null,
+      id,
       createdAt: new Date(),
     };
     this.users.set(id, user);
@@ -228,7 +231,9 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const category: Category = {
       id,
-      ...data,
+      name: data.name,
+      description: data.description || null,
+      icon: data.icon || null,
       createdAt: new Date(),
     };
     this.categories.set(id, category);
@@ -243,7 +248,16 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const product: Product = {
       id,
-      ...data,
+      name: data.name,
+      description: data.description || null,
+      categoryId: data.categoryId,
+      price: String(data.price),
+      discountPrice: data.discountPrice ? String(data.discountPrice) : null,
+      stock: data.stock,
+      image: data.image || null,
+      rating: data.rating ? String(data.rating) : null,
+      isOrganic: data.isOrganic || false,
+      isFeatured: data.isFeatured || false,
       createdAt: new Date(),
     };
     this.products.set(id, product);
@@ -321,7 +335,16 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const order: Order = {
       id,
-      ...data,
+      userId: data.userId,
+      items: data.items,
+      subtotal: String(data.subtotal),
+      deliveryFee: String(data.deliveryFee),
+      tax: String(data.tax),
+      total: String(data.total),
+      deliveryAddress: data.deliveryAddress,
+      phoneNumber: data.phoneNumber,
+      status: data.status,
+      notes: data.notes || null,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -343,7 +366,10 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const review: Review = {
       id,
-      ...data,
+      productId: data.productId,
+      userId: data.userId,
+      rating: data.rating,
+      comment: data.comment || null,
       createdAt: new Date(),
     };
     this.reviews.set(id, review);
@@ -360,7 +386,17 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const vehicle: Vehicle = {
       id,
-      ...data,
+      name: data.name,
+      year: data.year,
+      type: data.type,
+      price: String(data.price),
+      horsepower: data.horsepower,
+      acceleration: String(data.acceleration),
+      transmission: data.transmission,
+      range: data.range || null,
+      mpg: data.mpg || null,
+      isElectric: data.isElectric || false,
+      isNew: data.isNew || true,
       createdAt: new Date(),
     };
     this.vehicles.set(id, vehicle);
