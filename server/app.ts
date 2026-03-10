@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Initialize session middleware
 const SessionStore = MemoryStore(session);
-const sessionStore = new SessionStore();
+const sessionStore = new SessionStore({ checkPeriod: 86400000 });
 app.use(session({
   store: sessionStore,
   secret: process.env.SESSION_SECRET || "dev-secret-key",
@@ -85,6 +85,15 @@ app.use((req, res, next) => {
 export default async function runApp(
   setup: (app: Express, server?: Server) => Promise<void>,
 ) {
+  // Register API routes (always required for both dev and production)
+  const server = await registerRoutes(app);
+
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(status).json({ message });
+  });
+
   // In production — Vercel Serverless
   // Return the Express app WITHOUT calling listen()
   // Vercel will wrap it in their own server
@@ -93,18 +102,7 @@ export default async function runApp(
     return app;
   }
 
-  // In development — local machine
-  // Start the HTTP server and mount Vite
-  const server = await registerRoutes(app);
-
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-    res.status(status).json({ message });
-    throw err;
-  });
-
-  // Run setup after all routes (dev uses Vite middleware, prod uses static files)
+  // In development — local machine, run Vite middleware
   await setup(app, server);
 
   // ALWAYS serve the app on the port specified in the environment variable PORT

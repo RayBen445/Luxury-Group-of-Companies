@@ -13,6 +13,18 @@ import {
   type InsertReview,
   type Vehicle,
   type InsertVehicle,
+  type Reservation,
+  type InsertReservation,
+  type Newsletter,
+  type InsertNewsletter,
+  type FoodOrder,
+  type InsertFoodOrder,
+  type BankAccount,
+  type InsertBankAccount,
+  type BankCard,
+  type InsertBankCard,
+  type Transaction,
+  type InsertTransaction,
 } from "@shared/schema";
 
 import { randomUUID } from "crypto";
@@ -50,6 +62,25 @@ export interface IStorage {
   getVehicles(): Promise<Vehicle[]>;
   getVehicle(id: string): Promise<Vehicle | undefined>;
   getVehiclesByType(type: string): Promise<Vehicle[]>;
+
+  // Reservations
+  createReservation(reservation: InsertReservation): Promise<Reservation>;
+  getReservations(): Promise<Reservation[]>;
+
+  // Food Orders
+  createFoodOrder(order: InsertFoodOrder): Promise<FoodOrder>;
+  getFoodOrder(id: string): Promise<FoodOrder | undefined>;
+
+  // Newsletter
+  createNewsletter(data: InsertNewsletter): Promise<Newsletter>;
+
+  // Banking
+  createBankAccount(data: Omit<InsertBankAccount, 'accountNumber'> & { accountNumber: string }): Promise<BankAccount>;
+  getBankAccountsByEmail(email: string): Promise<BankAccount[]>;
+  getBankAccountById(id: string): Promise<BankAccount | undefined>;
+  getBankAccountCards(accountId: string): Promise<BankCard[]>;
+  getAccountTransactions(accountId: string): Promise<Transaction[]>;
+  createBankCard(data: Omit<InsertBankCard, 'cardNumber' | 'expiryDate' | 'cvv'> & { cardNumber: string; expiryDate: string; cvv: string }): Promise<BankCard>;
 }
 
 export class MemStorage implements IStorage {
@@ -60,6 +91,12 @@ export class MemStorage implements IStorage {
   private orders = new Map<string, Order>();
   private reviews = new Map<string, Review>();
   private vehicles = new Map<string, Vehicle>();
+  private reservations = new Map<string, Reservation>();
+  private foodOrders = new Map<string, FoodOrder>();
+  private newsletters = new Map<string, Newsletter>();
+  private bankAccounts = new Map<string, BankAccount>();
+  private bankCards = new Map<string, BankCard>();
+  private transactions = new Map<string, Transaction>();
 
   constructor() {
     this.initializeDefaultData();
@@ -359,7 +396,7 @@ export class MemStorage implements IStorage {
   async getUserOrders(userId: string): Promise<Order[]> {
     return Array.from(this.orders.values())
       .filter((o) => o.userId === userId)
-      .sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
+      .sort((a, b) => (b.createdAt ?? new Date(0)).getTime() - (a.createdAt ?? new Date(0)).getTime());
   }
 
   async createReview(data: InsertReview): Promise<Review> {
@@ -379,7 +416,7 @@ export class MemStorage implements IStorage {
   async getProductReviews(productId: string): Promise<Review[]> {
     return Array.from(this.reviews.values())
       .filter((r) => r.productId === productId)
-      .sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
+      .sort((a, b) => (b.createdAt ?? new Date(0)).getTime() - (a.createdAt ?? new Date(0)).getTime());
   }
 
   async createVehicle(data: InsertVehicle): Promise<Vehicle> {
@@ -414,6 +451,131 @@ export class MemStorage implements IStorage {
   async getVehiclesByType(type: string): Promise<Vehicle[]> {
     return Array.from(this.vehicles.values())
       .filter((v) => v.type === type);
+  }
+
+  // Reservations
+  async createReservation(data: InsertReservation): Promise<Reservation> {
+    const id = randomUUID();
+    const reservation: Reservation = {
+      id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      guests: data.guests,
+      date: data.date,
+      time: data.time,
+      tableType: data.tableType,
+      specialRequests: data.specialRequests || null,
+      createdAt: new Date(),
+    };
+    this.reservations.set(id, reservation);
+    return reservation;
+  }
+
+  async getReservations(): Promise<Reservation[]> {
+    return Array.from(this.reservations.values())
+      .sort((a, b) => (b.createdAt ?? new Date(0)).getTime() - (a.createdAt ?? new Date(0)).getTime());
+  }
+
+  // Food Orders
+  async createFoodOrder(data: InsertFoodOrder): Promise<FoodOrder> {
+    const id = randomUUID();
+    const order: FoodOrder = {
+      id,
+      email: data.email,
+      phone: data.phone,
+      items: data.items,
+      deliveryType: data.deliveryType,
+      deliveryAddress: data.deliveryAddress || null,
+      subtotal: data.subtotal,
+      deliveryFee: data.deliveryFee,
+      total: data.total,
+      status: "pending",
+      createdAt: new Date(),
+    };
+    this.foodOrders.set(id, order);
+    return order;
+  }
+
+  async getFoodOrder(id: string): Promise<FoodOrder | undefined> {
+    return this.foodOrders.get(id);
+  }
+
+  // Newsletter
+  async createNewsletter(data: InsertNewsletter): Promise<Newsletter> {
+    // Check if already subscribed
+    const existing = Array.from(this.newsletters.values()).find(
+      (n) => n.email === data.email
+    );
+    if (existing) return existing;
+
+    const id = randomUUID();
+    const newsletter: Newsletter = {
+      id,
+      email: data.email,
+      subscribedAt: new Date(),
+    };
+    this.newsletters.set(id, newsletter);
+    return newsletter;
+  }
+
+  // Banking
+  async createBankAccount(
+    data: Omit<InsertBankAccount, 'accountNumber'> & { accountNumber: string }
+  ): Promise<BankAccount> {
+    const id = randomUUID();
+    const account: BankAccount = {
+      id,
+      email: data.email,
+      accountNumber: data.accountNumber,
+      accountType: data.accountType,
+      balance: "0.00",
+      createdAt: new Date(),
+    };
+    this.bankAccounts.set(id, account);
+    return account;
+  }
+
+  async getBankAccountsByEmail(email: string): Promise<BankAccount[]> {
+    return Array.from(this.bankAccounts.values())
+      .filter((a) => a.email === email);
+  }
+
+  async getBankAccountById(id: string): Promise<BankAccount | undefined> {
+    return this.bankAccounts.get(id);
+  }
+
+  async getBankAccountCards(accountId: string): Promise<BankCard[]> {
+    return Array.from(this.bankCards.values())
+      .filter((c) => c.accountId === accountId);
+  }
+
+  async getAccountTransactions(accountId: string): Promise<Transaction[]> {
+    return Array.from(this.transactions.values())
+      .filter((t) => t.accountId === accountId)
+      .sort((a, b) => (b.createdAt ?? new Date(0)).getTime() - (a.createdAt ?? new Date(0)).getTime());
+  }
+
+  async createBankCard(
+    data: Omit<InsertBankCard, 'cardNumber' | 'expiryDate' | 'cvv'> & {
+      cardNumber: string;
+      expiryDate: string;
+      cvv: string;
+    }
+  ): Promise<BankCard> {
+    const id = randomUUID();
+    const card: BankCard = {
+      id,
+      accountId: data.accountId,
+      cardNumber: data.cardNumber,
+      cardholderName: data.cardholderName,
+      expiryDate: data.expiryDate,
+      cvv: data.cvv,
+      cardType: data.cardType,
+      createdAt: new Date(),
+    };
+    this.bankCards.set(id, card);
+    return card;
   }
 }
 

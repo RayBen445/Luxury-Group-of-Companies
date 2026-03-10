@@ -51,7 +51,7 @@ export default function BankDashboardPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           accountId,
-          cardholderName: `${account.firstName} ${account.lastName}`,
+          cardholderName: account.email,
           cardType: "debit",
         }),
       });
@@ -151,10 +151,10 @@ export default function BankDashboardPage() {
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <div>
-                          <CardTitle>{account.firstName} {account.lastName}</CardTitle>
+                          <CardTitle>{account.email}</CardTitle>
                           <CardDescription className="capitalize">{account.accountType.replace("_", " ")} Account</CardDescription>
                         </div>
-                        <Badge>{account.status}</Badge>
+                        <Badge>Active</Badge>
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -168,7 +168,7 @@ export default function BankDashboardPage() {
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground mb-2">Created</p>
-                        <p className="text-sm">{new Date(account.createdAt).toLocaleDateString()}</p>
+                        <p className="text-sm">{account.createdAt ? new Date(account.createdAt).toLocaleDateString() : "—"}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -219,7 +219,7 @@ export default function BankDashboardPage() {
                               </div>
                             </div>
                             <Badge variant="outline" className="w-full justify-center">
-                              {card.status}
+                              {card.cardType}
                             </Badge>
                           </div>
                         </CardContent>
@@ -271,7 +271,7 @@ export default function BankDashboardPage() {
                                 {txn.type === "deposit" ? "+" : "-"}${Math.abs(parseFloat(txn.amount)).toFixed(2)}
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                {new Date(txn.createdAt).toLocaleDateString()}
+                                {txn.createdAt ? new Date(txn.createdAt).toLocaleDateString() : "—"}
                               </p>
                             </div>
                           </div>
