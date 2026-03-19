@@ -54,7 +54,7 @@ export default function CheckoutPage() {
         0
       );
 
-      return apiRequest("POST", "/api/orders", {
+      const response = await apiRequest("POST", "/api/orders", {
         items: JSON.stringify(items),
         subtotal: subtotal.toString(),
         deliveryFee: "5.00",
@@ -65,6 +65,7 @@ export default function CheckoutPage() {
         phoneNumber: data.phoneNumber,
         notes: data.notes,
       });
+      return response.json();
     },
     onSuccess: (order) => {
       toast({ title: "Order placed successfully!" });

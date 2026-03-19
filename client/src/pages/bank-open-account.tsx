@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,18 +9,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import { insertBankAccountSchema } from "@shared/schema";
 import { Link } from "wouter";
 import { ArrowLeft, CheckCircle2, Clock, Shield } from "lucide-react";
 import dashboardImage from "@assets/generated_images/digital_banking_dashboard.png";
 
-const openAccountSchema = insertBankAccountSchema;
+const openAccountSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  accountType: z.enum(["checking", "savings", "money_market"]),
+});
+
+type OpenAccountFormData = z.infer<typeof openAccountSchema>;
 
 export default function BankOpenAccountPage() {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
 
-  const form = useForm({
+  const form = useForm<OpenAccountFormData>({
     resolver: zodResolver(openAccountSchema),
     defaultValues: {
       email: "",
@@ -28,7 +33,7 @@ export default function BankOpenAccountPage() {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: typeof openAccountSchema._type) => {
+    mutationFn: async (data: OpenAccountFormData) => {
       const response = await fetch("/api/bank/accounts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -57,7 +62,7 @@ export default function BankOpenAccountPage() {
     },
   });
 
-  const onSubmit = (data: typeof openAccountSchema._type) => {
+  const onSubmit = (data: OpenAccountFormData) => {
     mutation.mutate(data);
   };
 

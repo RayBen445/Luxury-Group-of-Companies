@@ -9,8 +9,12 @@ import {
   insertOrderSchema,
   insertReviewSchema,
   insertVehicleSchema,
+  insertReservationSchema,
+  insertFoodOrderSchema,
+  insertNewsletterSchema,
 } from "@shared/schema";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication
@@ -344,6 +348,169 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching vehicles by type:", error);
       res.status(500).json({ error: "Failed to fetch vehicles" });
+    }
+  });
+
+  // Reservations
+  app.post("/api/reservations", async (req, res) => {
+    try {
+      const parsed = insertReservationSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid reservation data" });
+      }
+      const reservation = await storage.createReservation(parsed.data);
+      res.json(reservation);
+    } catch (error) {
+      console.error("Error creating reservation:", error);
+      res.status(500).json({ error: "Failed to create reservation" });
+    }
+  });
+
+  app.get("/api/reservations", async (_req, res) => {
+    try {
+      const reservations = await storage.getReservations();
+      res.json(reservations);
+    } catch (error) {
+      console.error("Error fetching reservations:", error);
+      res.status(500).json({ error: "Failed to fetch reservations" });
+    }
+  });
+
+  // Food Orders
+  app.post("/api/food-orders", async (req, res) => {
+    try {
+      const parsed = insertFoodOrderSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid food order data" });
+      }
+      const order = await storage.createFoodOrder(parsed.data);
+      res.json(order);
+    } catch (error) {
+      console.error("Error creating food order:", error);
+      res.status(500).json({ error: "Failed to create food order" });
+    }
+  });
+
+  app.get("/api/food-orders/:id", async (req, res) => {
+    try {
+      const order = await storage.getFoodOrder(req.params.id);
+      if (!order) {
+        return res.status(404).json({ error: "Food order not found" });
+      }
+      res.json(order);
+    } catch (error) {
+      console.error("Error fetching food order:", error);
+      res.status(500).json({ error: "Failed to fetch food order" });
+    }
+  });
+
+  // Newsletter
+  app.post("/api/newsletter", async (req, res) => {
+    try {
+      const parsed = insertNewsletterSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid email address" });
+      }
+      const subscription = await storage.createNewsletter(parsed.data);
+      res.json({ success: true, id: subscription.id });
+    } catch (error) {
+      console.error("Error subscribing to newsletter:", error);
+      res.status(500).json({ error: "Failed to subscribe to newsletter" });
+    }
+  });
+
+  // Banking
+  const openAccountSchema = z.object({
+    email: z.string().email(),
+    accountType: z.enum(["checking", "savings", "money_market"]),
+  });
+
+  app.post("/api/bank/accounts", async (req, res) => {
+    try {
+      const parsed = openAccountSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid account data" });
+      }
+      // Generate a unique account number using cryptographically secure random bytes
+      const { randomBytes } = await import("crypto");
+      const accountNumber = `LUX${randomBytes(4).readUInt32BE(0).toString().slice(-8).padStart(8, "0")}`;
+      const account = await storage.createBankAccount({
+        ...parsed.data,
+        accountNumber,
+      });
+      res.json(account);
+    } catch (error) {
+      console.error("Error creating bank account:", error);
+      res.status(500).json({ error: "Failed to create bank account" });
+    }
+  });
+
+  app.get("/api/bank/accounts/:email", async (req, res) => {
+    try {
+      const accounts = await storage.getBankAccountsByEmail(req.params.email);
+      res.json(accounts);
+    } catch (error) {
+      console.error("Error fetching bank accounts:", error);
+      res.status(500).json({ error: "Failed to fetch bank accounts" });
+    }
+  });
+
+  app.get("/api/bank/accounts/:accountId/cards", async (req, res) => {
+    try {
+      const cards = await storage.getBankAccountCards(req.params.accountId);
+      res.json(cards);
+    } catch (error) {
+      console.error("Error fetching bank cards:", error);
+      res.status(500).json({ error: "Failed to fetch bank cards" });
+    }
+  });
+
+  app.get("/api/bank/transactions/:accountId", async (req, res) => {
+    try {
+      const transactions = await storage.getAccountTransactions(req.params.accountId);
+      res.json(transactions);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+      res.status(500).json({ error: "Failed to fetch transactions" });
+    }
+  });
+
+  const createCardSchema = z.object({
+    accountId: z.string().min(1),
+    cardholderName: z.string().min(2),
+    cardType: z.enum(["debit", "credit"]),
+  });
+
+  app.post("/api/bank/cards", async (req, res) => {
+    try {
+      const parsed = createCardSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: "Invalid card data" });
+      }
+      // Verify the account exists
+      const account = await storage.getBankAccountById(parsed.data.accountId);
+      if (!account) {
+        return res.status(404).json({ error: "Bank account not found" });
+      }
+      // Generate card details using cryptographically secure random values
+      const { randomInt } = await import("crypto");
+      const cardNumber = Array.from({ length: 4 }, () =>
+        randomInt(0, 10000).toString().padStart(4, "0")
+      ).join(" ");
+      const now = new Date();
+      const expiryDate = `${String(now.getMonth() + 1).padStart(2, "0")}/${String(now.getFullYear() + 5).slice(-2)}`;
+      const cvv = randomInt(0, 1000).toString().padStart(3, "0");
+
+      const card = await storage.createBankCard({
+        ...parsed.data,
+        cardNumber,
+        expiryDate,
+        cvv,
+      });
+      res.json(card);
+    } catch (error) {
+      console.error("Error creating bank card:", error);
+      res.status(500).json({ error: "Failed to create bank card" });
     }
   });
 

@@ -41,7 +41,7 @@ export function FoodOrderingSection() {
   });
 
   const deliveryType = form.watch("deliveryType");
-  const categories = [...new Set(foods.filter(f => !f.comingSoon).map(f => f.category))];
+  const categories = Array.from(new Set(foods.filter(f => !f.comingSoon).map(f => f.category)));
 
   const availableFoods = foods.filter(f => !f.comingSoon && (selectedCategory === "All" || f.category === selectedCategory));
 
